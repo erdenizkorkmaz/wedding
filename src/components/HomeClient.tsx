@@ -104,9 +104,9 @@ export default function HomeClient({ locale }: HomeClientProps) {
                         <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('london')}>{nav('london')}</span>
                         <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('istanbul')}>{nav('istanbul')}</span>
                         <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('seoul')}>{nav('seoul')}</span>
-                        <span> - </span>
+                        <span className="hidden lg:inline"> - </span>
                         <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('contact')}>{nav('contact')}</span>
-                        <span> - </span>
+                        <span className="hidden lg:inline"> - </span>
                         <LanguageSwitcher />
                     </div>
                     <img src="/small-flowers.png" className="w-10 h-10 ml-2 lg:ml-6" />
