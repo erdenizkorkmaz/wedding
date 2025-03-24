@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #f69d3c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #F2EDEA;
+    --foreground: #607747;
+    --primary: #f69d3c;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-nanum-brush-script);
+}
+
+.gradient-bg {
+  background: linear-gradient(180deg, var(--background), var(--foreground), var(--background));
+}

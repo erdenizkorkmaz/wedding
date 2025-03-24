@@ -1,0 +1,56 @@
+{
+    "home": {
+        "title": "Hyejin & Erdeniz",
+        "description": "invite you to celebrate their marriage",
+        "scrollDown": "Scroll to explore",
+        "celebrations": {
+            "UK": {
+                "title": "London",
+                "date": "27th April 2025",
+                "location": "The Brydon Room, Chealsea Old Town Hall, King's rd, SW3 5EE",
+                "descriptionTitle": "Timeline",
+                "description1": "13:00 - I Do O'Clock",
+                "description2": "14:00 - Photo Session",
+                "description3": "15:00 - Cake Cutting",
+                "description4": "16:00 - Drink"
+            },
+            "TR": {
+                "title": "Istanbul",
+                "date": "3rd May 2025",
+                "location": "Svadba, Visne Mahallesi Macka Demokrasi Parki, Visnezade, Bayildim Cd. D:No:12",
+                "descriptionTitle": "Timeline",
+                "description1": "19:00 - Ceremony",
+                "description2": "20:00 - We Eat!",
+                "description3": "21:00 - We Dance!"
+            },
+            "KO": {
+                "title": "Seoul",
+                "date": "8th June 2025",
+                "location": "Korea House, 20 Toegye-ro 36-gil, Jung District",
+                "descriptionTitle": "Timeline",
+                "description1": "12:00 - Ceremony",
+                "description2": "12:30 - Say Cheese!",
+                "description3": "13:00 - Pye Baek",
+                "description4": "13:00 - Feast & Fun!"
+            }
+        }
+    },
+    "navigation": {
+        "london": "London",
+        "istanbul": "Istanbul",
+        "seoul": "Seoul",
+        "contact": "Contact"
+    },
+    "contact": {
+        "title": "Contact Us",
+        "description": "We would love to hear from you! Please use the form below to get in touch with us.",
+        "form": {
+            "name": "Name",
+            "email": "Email",
+            "message": "Message"
+        }
+    },
+    "footer": {
+        "copyright": "© 2024 Our Wedding. All rights reserved."
+    }
+}

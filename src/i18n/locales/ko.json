@@ -1,0 +1,60 @@
+{
+    "home": {
+        "title": "결혼식에 오신 것을 환영합니다",
+        "description": "우리는 결혼합니다! 특별한 날에 함께해 주세요.",
+        "learnMore": "더 알아보기",
+        "date": "날짜 및 시간",
+        "location": "장소",
+        "rsvp": "참석 여부",
+        "scrollDown": "아래로 스크롤하여 더 보기",
+        "celebrations": {
+            "UK": {
+                "title": "런던",
+                "date": "2025년 4월 27일",
+                "location": "The Brydon Room, Chealsea Old Town Hall, King's rd, SW3 5EE",
+                "descriptionTitle": "일정",
+                "description1": "13:00 - 결혼식",
+                "description2": "14:00 - 사진 촬영",
+                "description3": "15:00 - 케이크 커팅",
+                "description4": "16:00 - 음료 제공"
+            },
+            "TR": {
+                "title": "이스탄불",
+                "date": "2025년 5월 3일",
+                "location": "Svadba, Visne Mahallesi Macka demokrasi parki, Visnezade, Bayildim Cd. D:No:12",
+                "descriptionTitle": "일정",
+                "description1": "19:00 - 식",
+                "description2": "20:00 - 식사 시간!",
+                "description3": "21:00 - 댄스 타임!"
+            },
+            "KO": {
+                "title": "서울",
+                "date": "2025년 6월 8일",
+                "location": "한국의 집, 중구 퇴계로36길 20",
+                "descriptionTitle": "일정",
+                "description1": "12:00 - 결혼식",
+                "description2": "12:30 - 사진 촬영!",
+                "description3": "13:00 - 폐백",
+                "description4": "13:00 - 연회 및 축하!"
+            }
+        }
+    },
+    "navigation": {
+        "london": "런던",
+        "istanbul": "이스탄불",
+        "seoul": "서울",
+        "contact": "연락처"
+    },
+    "contact": {
+        "title": "연락처",
+        "description": "우리에게 메시지를 보내주세요! 아래 양식을 사용하여 우리에게 연락하세요.",
+        "form": {
+            "name": "이름",
+            "email": "이메일",
+            "message": "메시지"
+        }
+    },
+    "footer": {
+        "copyright": "© 2024 우리의 결혼식. 모든 권리 보유."
+    }
+}

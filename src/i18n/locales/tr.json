@@ -1,0 +1,60 @@
+{
+    "home": {
+        "title": "Düğünümüze Hoş Geldiniz",
+        "description": "Evleniyoruz! Özel günümüzde bize katılın.",
+        "learnMore": "Daha Fazla Bilgi",
+        "date": "Tarih ve Saat",
+        "location": "Konum",
+        "rsvp": "Katılım Onayı",
+        "scrollDown": "Keşfetmek için kaydırın",
+        "celebrations": {
+            "UK": {
+                "title": "Londra",
+                "date": "27 Nisan 2025",
+                "location": "The Brydon Room, Chealsea Old Town Hall, King's rd, SW3 5EE",
+                "descriptionTitle": "Program",
+                "description1": "13:00 - Nikah Töreni",
+                "description2": "14:00 - Fotoğraf Çekimi",
+                "description3": "15:00 - Pasta Kesimi",
+                "description4": "16:00 - İçki Servisi"
+            },
+            "TR": {
+                "title": "İstanbul",
+                "date": "3 Mayıs 2025",
+                "location": "Svadba, Visne Mahallesi Macka demokrasi parki, Visnezade, Bayildim Cd. D:No:12",
+                "descriptionTitle": "Program",
+                "description1": "19:00 - Tören",
+                "description2": "20:00 - Yemek Vakti!",
+                "description3": "21:00 - Dans Zamanı!"
+            },
+            "KO": {
+                "title": "Seul",
+                "date": "8 Haziran 2025",
+                "location": "Korea House, 20 Toegye-ro 36-gil, Jung District",
+                "descriptionTitle": "Program",
+                "description1": "12:00 - Tören",
+                "description2": "12:30 - Fotoğraf Çekimi!",
+                "description3": "13:00 - Pye Baek",
+                "description4": "13:00 - Ziyafet ve Eğlence!"
+            }
+        }
+    },
+    "navigation": {
+        "london": "Londra",
+        "istanbul": "İstanbul",
+        "seoul": "Seul",
+        "contact": "İletişim"
+    },
+    "contact": {
+        "title": "İletişim",
+        "description": "Bize mesaj gönderin! Lütfen aşağıdaki formu kullanarak bize ulaşın.",
+        "form": {
+            "name": "Adınız",
+            "email": "Email",
+            "message": "Mesaj"
+        }
+    },
+    "footer": {
+        "copyright": "© 2024 Düğünümüz. Tüm hakları saklıdır."
+    }
+}
