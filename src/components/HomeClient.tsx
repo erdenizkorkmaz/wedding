@@ -4,6 +4,15 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import EventContainer from "./eventContainer";
+import { useEffect, useState } from "react";
+
+declare global {
+    interface Window {
+        grecaptcha: {
+            reset: () => void;
+        };
+    }
+}
 
 interface HomeClientProps {
     locale: string;
@@ -15,6 +24,24 @@ export default function HomeClient({ locale }: HomeClientProps) {
     const nav = useTranslations('navigation');
     const footer = useTranslations('footer');
     const contact = useTranslations('contact');
+    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+
+    useEffect(() => {
+        // Load reCAPTCHA script
+        const script = document.createElement('script');
+        script.src = 'https://www.google.com/recaptcha/api.js';
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+
+        return () => {
+            document.head.removeChild(script);
+        };
+    }, []);
+
+    const onRecaptchaChange = (token: string | null) => {
+        setRecaptchaToken(token);
+    };
 
     const scrollTo = (id: string) => {
         const element = document.getElementById(id);
@@ -35,6 +62,11 @@ export default function HomeClient({ locale }: HomeClientProps) {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!recaptchaToken) {
+            alert('Please complete the reCAPTCHA verification');
+            return;
+        }
+
         const formData = new FormData(e.target as HTMLFormElement);
         const name = formData.get('name');
         const email = formData.get('email');
@@ -44,7 +76,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, email, message }),
+            body: JSON.stringify({ name, email, message, recaptchaToken }),
         })
             .then(response => {
                 if (response.ok) {
@@ -56,6 +88,10 @@ export default function HomeClient({ locale }: HomeClientProps) {
                 console.log('Email sent successfully:', data);
                 alert('Thank you for your message! We will get back to you soon.');
                 (e.target as HTMLFormElement).reset();
+                // Reset reCAPTCHA
+                if (window.grecaptcha) {
+                    window.grecaptcha.reset();
+                }
             })
             .catch(error => {
                 console.error('Error sending email:', error);
@@ -171,6 +207,13 @@ export default function HomeClient({ locale }: HomeClientProps) {
                             <input className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" type="email" id="email" name="email" />
                             <label htmlFor="message">{contact('form.message')}</label>
                             <textarea rows={5} className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" id="message" name="message" />
+                            <div className="flex justify-center my-4">
+                                <div
+                                    className="g-recaptcha"
+                                    data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                                    data-callback={onRecaptchaChange}
+                                ></div>
+                            </div>
                             <button className="mt-8 bg-[var(--foreground)] text-[var(--background)] px-4 py-2 rounded-md" type="submit">{contact('form.submit')}</button>
                         </div>
                     </form>
