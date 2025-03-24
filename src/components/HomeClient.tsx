@@ -99,8 +99,8 @@ export default function HomeClient({ locale }: HomeClientProps) {
             {/* Navigation */}
             <nav className="px-4 py-4 bg-background/80 backdrop-blur-sm fixed top-0 right-0 left-0 w-full z-10">
                 <div className="container mx-auto flex justify-center items-center">
-                    <img src="/small-flowers.png" className="w-10 h-10 mr-6 rotate-180" />
-                    <div className="flex items-center space-x-6 text-2xl">
+                    <img src="/small-flowers.png" className="w-10 h-10 mr-2 lg:mr-6 rotate-180" />
+                    <div className="flex items-center space-x-2 lg:space-x-6 text-md lg:text-2xl">
                         <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('london')}>{nav('london')}</span>
                         <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('istanbul')}>{nav('istanbul')}</span>
                         <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('seoul')}>{nav('seoul')}</span>
@@ -109,7 +109,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                         <span> - </span>
                         <LanguageSwitcher />
                     </div>
-                    <img src="/small-flowers.png" className="w-10 h-10 ml-6" />
+                    <img src="/small-flowers.png" className="w-10 h-10 ml-2 lg:ml-6" />
                 </div>
             </nav>
 
@@ -123,9 +123,9 @@ export default function HomeClient({ locale }: HomeClientProps) {
             >
                 <div className="container mx-auto flex flex-col gap-8">
                     <img src="/hero.png" className="w-full max-w-screen-lg mx-auto" />
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-2 lg:gap-4">
                         <motion.h1
-                            className="text-7xl font-bold whitespace-nowrap"
+                            className="text-5xl lg:text-7xl font-bold whitespace-nowrap"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3 }}
@@ -133,7 +133,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                             {t('title')}
                         </motion.h1>
                         <motion.p
-                            className="text-4xl"
+                            className="text-2xl lg:text-4xl"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.5 }}
@@ -145,8 +145,8 @@ export default function HomeClient({ locale }: HomeClientProps) {
             </motion.section>
 
             {/* Info Cards */}
-            <section id="celebrations" className="py-16 px-4 w-full flex flex-row justify-center relative container mx-auto">
-                <img src="/flower-line.png" className="flex-1 -mr-16 z-10" />
+            <section id="celebrations" className="py-8 lg:py-16 px-4 w-full flex flex-row justify-center relative container mx-auto">
+                <img src="/flower-line.png" className="flex-1 -mr-16 z-10 hidden lg:flex" />
                 <div className="flex flex-col gap-12 w-full">
                     {celebrations.map((celebration, index) => (
                         <EventContainer key={index} {...celebration} />

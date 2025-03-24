@@ -16,14 +16,14 @@ export default function EventContainer(props: EventContainerProps) {
     return (
         <motion.div
             id={props.title.toLowerCase()}
-            className="bg-white/40 backdrop-blur-sm pl-20 p-8 relative rounded-lg shadow-lg"
+            className="bg-white/40 backdrop-blur-sm pl-8 lg:pl-20 p-8 relative rounded-lg shadow-lg"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
         >
-            <div className="flex flex-row gap-4 justify-between w-full">
-                <div className="flex flex-col w-1/2">
+            <div className="flex flex-col lg:flex-row gap-4 justify-between w-full">
+                <div className="flex flex-col w-full lg:w-1/2">
                     <h2 className="text-3xl font-bold mb-4">{props.title} - {props.date}</h2>
                     <p className="text-foreground text-2xl">{props.location}</p>
                     <b className="mt-3 text-2xl">{props.descriptionTitle}</b>
@@ -34,7 +34,7 @@ export default function EventContainer(props: EventContainerProps) {
                         <p className="text-foreground">{props.description4}</p>
                     </div>
                 </div>
-                <div className="google-maps-container w-1/2">
+                <div className="google-maps-container w-full lg:w-1/2">
                     <iframe
                         src={props.map}
                         width="100%"

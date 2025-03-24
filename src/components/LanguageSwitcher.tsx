@@ -34,7 +34,7 @@ export default function LanguageSwitcher() {
     }, [currentLocale, pathname]);
 
     return (
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-1 lg:space-x-3">
             {locales.map((locale) => (
                 <button
                     key={locale}
