@@ -39,9 +39,9 @@ export default function LanguageSwitcher() {
                 <button
                     key={locale}
                     onClick={() => handleLocaleChange(locale)}
-                    className={`text-xl font-medium px-2 py-1 rounded transition-colors ${currentLocale === locale
-                        ? 'bg-[var(--foreground)] text-[var(--background)]'
-                        : 'hover:bg-gray-200 dark:hover:bg-gray-700'
+                    className={`text-xl font-medium p-0 rounded transition-colors ${currentLocale === locale
+                        ? 'text-[var(--foreground)]'
+                        : 'text-[var(--foreground)]/50 hover:text-foreground'
                         }`}
                 >
                     {locale.toUpperCase()}

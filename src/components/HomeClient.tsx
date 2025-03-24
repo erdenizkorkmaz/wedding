@@ -18,13 +18,18 @@ export default function HomeClient({ locale }: HomeClientProps) {
 
     const scrollTo = (id: string) => {
         const element = document.getElementById(id);
-        const celebrationsSection = document.getElementById('celebrations');
-        if (element && celebrationsSection) {
-            console.log(element.offsetTop, celebrationsSection.offsetTop, element.offsetTop + celebrationsSection.offsetTop);
-            window.scrollTo({
-                top: element.offsetTop + celebrationsSection.offsetTop - 100,
-                behavior: 'smooth'
-            });
+        if (element) {
+            if (id === 'contact') {
+                window.scrollTo({
+                    top: element.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            } else {
+                window.scrollTo({
+                    top: element.offsetTop + element.offsetHeight,
+                    behavior: 'smooth'
+                });
+            }
         }
     }
 
@@ -98,7 +103,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
         <div className="flex flex-col min-h-screen bg-gradient-to-b from-background to-foreground/5" key={`home-root-${locale}`}>
             {/* Navigation */}
             <nav className="px-4 py-4 bg-background/80 backdrop-blur-sm fixed top-0 right-0 left-0 w-full z-10">
-                <div className="container mx-auto flex justify-center items-center">
+                <div className="container mx-auto flex justify-between items-center">
                     <img src="/small-flowers.png" className="w-10 h-10 mr-2 lg:mr-6 rotate-180" />
                     <div className="flex items-center space-x-2 lg:space-x-6 text-md lg:text-2xl">
                         <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('london')}>{nav('london')}</span>
@@ -125,7 +130,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                     <img src="/hero.png" className="w-full max-w-screen-lg mx-auto" />
                     <div className="flex flex-col gap-2 lg:gap-4">
                         <motion.h1
-                            className="text-5xl lg:text-7xl font-bold whitespace-nowrap"
+                            className="text-4xl lg:text-7xl font-bold whitespace-nowrap"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3 }}

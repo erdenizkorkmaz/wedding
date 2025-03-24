@@ -1,31 +1,31 @@
 {
     "home": {
-        "title": "Düğünümüze Hoş Geldiniz",
-        "description": "Evleniyoruz! Özel günümüzde bize katılın.",
+        "title": "Hyejin & Erdeniz",
+        "description": "sizi dugunlerine davet ediyor",
         "learnMore": "Daha Fazla Bilgi",
         "date": "Tarih ve Saat",
         "location": "Konum",
-        "rsvp": "Katılım Onayı",
-        "scrollDown": "Keşfetmek için kaydırın",
+        "rsvp": "Katilim Onayi",
+        "scrollDown": "Keşfetmek için kaydirin",
         "celebrations": {
             "UK": {
                 "title": "Londra",
                 "date": "27 Nisan 2025",
                 "location": "The Brydon Room, Chealsea Old Town Hall, King's rd, SW3 5EE",
                 "descriptionTitle": "Program",
-                "description1": "13:00 - Nikah Töreni",
-                "description2": "14:00 - Fotoğraf Çekimi",
+                "description1": "13:00 - Nikah Toreni",
+                "description2": "14:00 - Fotograf Cekimi",
                 "description3": "15:00 - Pasta Kesimi",
-                "description4": "16:00 - İçki Servisi"
+                "description4": "16:00 - Icki Servisi"
             },
             "TR": {
-                "title": "İstanbul",
-                "date": "3 Mayıs 2025",
+                "title": "Istanbul",
+                "date": "3 Mayis 2025",
                 "location": "Svadba, Visne Mahallesi Macka demokrasi parki, Visnezade, Bayildim Cd. D:No:12",
                 "descriptionTitle": "Program",
                 "description1": "19:00 - Tören",
                 "description2": "20:00 - Yemek Vakti!",
-                "description3": "21:00 - Dans Zamanı!"
+                "description3": "21:00 - Dans Zamani!"
             },
             "KO": {
                 "title": "Seul",
@@ -43,19 +43,19 @@
         "london": "Londra",
         "istanbul": "İstanbul",
         "seoul": "Seul",
-        "contact": "İletişim"
+        "contact": "Ilisim"
     },
     "contact": {
-        "title": "İletişim",
-        "description": "Bize mesaj gönderin! Lütfen aşağıdaki formu kullanarak bize ulaşın.",
+        "title": "Ilisim",
+        "description": "Bize mesaj gonderin! Lutfen asagidaki formu kullanarak bize ulasin.",
         "form": {
-            "name": "Adınız",
+            "name": "Adiniz",
             "email": "Email",
             "message": "Mesaj",
-            "submit": "Mesaji Gönder"
+            "submit": "Mesaji Gonder"
         }
     },
     "footer": {
-        "copyright": "© 2024 Düğünümüz. Tüm hakları saklıdır."
+        "copyright": "© 2024 Hyejin & Erdeniz. Tüm hakları saklıdır."
     }
 }
