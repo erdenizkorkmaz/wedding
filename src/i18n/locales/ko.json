@@ -51,7 +51,8 @@
         "form": {
             "name": "이름",
             "email": "이메일",
-            "message": "메시지"
+            "message": "메시지",
+            "submit": "메시지 보내기"
         }
     },
     "footer": {

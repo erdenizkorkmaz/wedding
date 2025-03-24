@@ -47,7 +47,8 @@
         "form": {
             "name": "Name",
             "email": "Email",
-            "message": "Message"
+            "message": "Message",
+            "submit": "Send Message"
         }
     },
     "footer": {

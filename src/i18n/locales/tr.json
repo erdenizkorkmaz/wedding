@@ -51,7 +51,8 @@
         "form": {
             "name": "Adınız",
             "email": "Email",
-            "message": "Mesaj"
+            "message": "Mesaj",
+            "submit": "Mesaji Gönder"
         }
     },
     "footer": {
