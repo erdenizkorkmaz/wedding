@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import EventContainer from "./eventContainer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 declare global {
     interface Window {
@@ -25,6 +25,10 @@ export default function HomeClient({ locale }: HomeClientProps) {
     const nav = useTranslations('navigation');
     const footer = useTranslations('footer');
     const contact = useTranslations('contact');
+
+    // Add loading state
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitResult, setSubmitResult] = useState<{ success?: boolean; message?: string } | null>(null);
 
     useEffect(() => {
         console.log('reCAPTCHA Site Key:', process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
@@ -92,77 +96,119 @@ export default function HomeClient({ locale }: HomeClientProps) {
     const executeRecaptcha = async () => {
         try {
             // Wait for grecaptcha to be defined with timeout
-            const waitForGrecaptcha = async (timeout = 5000) => {
+            const waitForGrecaptcha = async (timeout = 3000) => {
                 const startTime = Date.now();
                 while (!window.grecaptcha) {
                     if (Date.now() - startTime > timeout) {
-                        throw new Error('Timed out waiting for reCAPTCHA to load');
+                        console.log('Timed out waiting for reCAPTCHA to load, using fallback');
+                        return false;
                     }
                     // Wait 100ms before checking again
                     await new Promise(resolve => setTimeout(resolve, 100));
                 }
                 console.log('grecaptcha is available now');
+                return true;
             };
 
-            await waitForGrecaptcha();
-
-            if (!window.grecaptcha || !window.grecaptcha.ready) {
-                throw new Error('reCAPTCHA not initialized properly');
-            }
-
-            // Wait for reCAPTCHA to be ready
-            await new Promise<void>((resolve, reject) => {
-                try {
-                    window.grecaptcha.ready(() => {
-                        console.log('reCAPTCHA is ready for execution');
-                        resolve();
-                    });
-                } catch (error) {
-                    reject(error);
-                }
-            });
-
-            if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
-                throw new Error('reCAPTCHA site key is missing');
-            }
-
-            console.log('Executing reCAPTCHA with site key:', process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
-            const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {
-                action: 'contact_form'
-            });
-
-            console.log('Got reCAPTCHA token:', token.substring(0, 10) + '...');
-            return token;
-        } catch (error) {
-            console.error('Error executing reCAPTCHA:', error);
-
-            // If we can't get a token automatically, let the user submit anyway
-            // This is a fallback, will skip reCAPTCHA verification on the server
-            if (window.confirm('Could not verify automatically. Do you want to proceed with form submission anyway?')) {
+            const recaptchaLoaded = await waitForGrecaptcha();
+            if (!recaptchaLoaded) {
+                console.log('Using fallback token because reCAPTCHA failed to load');
                 return "fallback_token_manual_override";
             }
 
-            return null;
+            if (!window.grecaptcha || !window.grecaptcha.ready) {
+                console.error('reCAPTCHA not initialized properly');
+                return "fallback_token_manual_override";
+            }
+
+            // Wait for reCAPTCHA to be ready with timeout
+            let recaptchaReady = false;
+            try {
+                await new Promise<void>((resolve, reject) => {
+                    const timeout = setTimeout(() => {
+                        reject(new Error('reCAPTCHA ready timeout'));
+                    }, 3000);
+
+                    window.grecaptcha.ready(() => {
+                        clearTimeout(timeout);
+                        recaptchaReady = true;
+                        console.log('reCAPTCHA is ready for execution');
+                        resolve();
+                    });
+                });
+            } catch (readyError) {
+                console.error('Error waiting for reCAPTCHA to be ready:', readyError);
+                return "fallback_token_manual_override";
+            }
+
+            if (!recaptchaReady) {
+                console.error('reCAPTCHA not ready after timeout');
+                return "fallback_token_manual_override";
+            }
+
+            if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+                console.error('reCAPTCHA site key is missing');
+                return "fallback_token_manual_override";
+            }
+
+            try {
+                console.log('Executing reCAPTCHA with site key:', process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
+                const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {
+                    action: 'contact_form'
+                });
+
+                if (!token) {
+                    console.error('Empty token received from reCAPTCHA');
+                    return "fallback_token_manual_override";
+                }
+
+                console.log('Got reCAPTCHA token:', token.substring(0, 10) + '...');
+                return token;
+            } catch (executeError) {
+                console.error('Error executing reCAPTCHA:', executeError);
+                return "fallback_token_manual_override";
+            }
+        } catch (error) {
+            console.error('Error in reCAPTCHA process:', error);
+            return "fallback_token_manual_override";
         }
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // Execute reCAPTCHA before submitting
-        const token = await executeRecaptcha();
-
-        if (!token) {
-            alert('Could not verify you are human. Please try again later or contact us directly.');
-            return;
-        }
-
-        const formData = new FormData(e.target as HTMLFormElement);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const message = formData.get('message');
+        // Reset previous results
+        setSubmitResult(null);
+        setIsSubmitting(true);
 
         try {
+            // Execute reCAPTCHA before submitting
+            const token = await executeRecaptcha();
+
+            if (!token) {
+                setSubmitResult({
+                    success: false,
+                    message: 'Could not verify you are human. Please try again later or contact us directly.'
+                });
+                setIsSubmitting(false);
+                return;
+            }
+
+            const formData = new FormData(e.target as HTMLFormElement);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const message = formData.get('message');
+
+            // Validate required fields
+            if (!name || !email || !message) {
+                setSubmitResult({
+                    success: false,
+                    message: 'Please fill in all required fields'
+                });
+                setIsSubmitting(false);
+                return;
+            }
+
             const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: {
@@ -171,17 +217,26 @@ export default function HomeClient({ locale }: HomeClientProps) {
                 body: JSON.stringify({ name, email, message, recaptchaToken: token }),
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(data.error || 'Network response was not ok');
             }
 
-            const data = await response.json();
             console.log('Email sent successfully:', data);
-            alert('Thank you for your message! We will get back to you soon.');
+            setSubmitResult({
+                success: true,
+                message: 'Thank you for your message! We will get back to you soon.'
+            });
             (e.target as HTMLFormElement).reset();
         } catch (error) {
             console.error('Error sending email:', error);
-            alert('There was an error sending your message. Please try again later.');
+            setSubmitResult({
+                success: false,
+                message: 'There was an error sending your message. Please try again later.'
+            });
+        } finally {
+            setIsSubmitting(false);
         }
     }
 
@@ -302,15 +357,39 @@ export default function HomeClient({ locale }: HomeClientProps) {
                 <div className="flex flex-col gap-4 w-full">
                     <h2 className="text-4xl font-bold">{contact('title')}</h2>
                     <p className="text-2xl">{contact('description')}</p>
+
+                    {submitResult && (
+                        <div className={`p-4 my-4 text-2xl rounded-md ${submitResult.success
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+                            : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'}`}>
+                            {submitResult.message}
+                        </div>
+                    )}
+
                     <form onSubmit={handleSubmit}>
                         <div className="text-3xl flex flex-col gap-4">
                             <label htmlFor="name">{contact('form.name')}</label>
-                            <input className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" type="text" id="name" name="name" />
+                            <input className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" type="text" id="name" name="name" required />
                             <label htmlFor="email">{contact('form.email')}</label>
-                            <input className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" type="email" id="email" name="email" />
+                            <input className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" type="email" id="email" name="email" required />
                             <label htmlFor="message">{contact('form.message')}</label>
-                            <textarea rows={5} className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" id="message" name="message" />
-                            <button className="mt-8 bg-[var(--foreground)] text-[var(--background)] px-4 py-2 rounded-md" type="submit">{contact('form.submit')}</button>
+                            <textarea rows={5} className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" id="message" name="message" required />
+                            <button
+                                className={`mt-8 px-4 py-2 rounded-md flex items-center justify-center ${isSubmitting
+                                    ? 'bg-gray-500 cursor-not-allowed'
+                                    : 'bg-[var(--foreground)] text-[var(--background)] hover:bg-opacity-90'}`}
+                                type="submit"
+                                disabled={isSubmitting}>
+                                {isSubmitting ? (
+                                    <span className="flex items-center">
+                                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        {contact('form.sending')}
+                                    </span>
+                                ) : contact('form.submit')}
+                            </button>
                         </div>
                     </form>
                 </div>

@@ -52,7 +52,8 @@
             "name": "Adiniz",
             "email": "Email",
             "message": "Mesaj",
-            "submit": "Mesaji Gonder"
+            "submit": "Mesaji Gonder",
+            "sending": "Gönderiliyor..."
         }
     },
     "footer": {
