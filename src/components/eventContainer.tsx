@@ -62,7 +62,7 @@ export default function EventContainer(props: EventContainerProps) {
             transition={{ duration: 0.8 }}
             viewport={{ once: true, amount: 0.6 }}
         >
-            <img src="/flower-medium-vertical.png" className="hidden lg:flex absolute -left-8 rotate-12 z-10 h-full pointer-events-none" />
+            <img src="/flower-medium-vertical.png" className="hidden lg:flex absolute -left-5 rotate-12 z-10 h-full pointer-events-none" />
             <div className="bg-white/60 rounded-lg shadow-lg lg:ml-20 lg:pl-28 p-6 lg:p-8 flex flex-col lg:flex-row gap-4 justify-between">
                 <div className="flex flex-col w-full lg:w-1/2 text-green-800">
 
