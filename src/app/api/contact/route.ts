@@ -134,7 +134,7 @@ export async function POST(request: Request) {
         const mailOptions = {
           from: process.env.SMTP_USER,
           to: process.env.RECIPIENT_EMAIL,
-          cc: process.env.CC_EMAIL,
+          // cc: process.env.CC_EMAIL,
           subject: `Wedding Message from ${name}`,
           text: `
               Name: ${name}

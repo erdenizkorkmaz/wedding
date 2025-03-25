@@ -34,14 +34,14 @@ export default function LanguageSwitcher() {
     }, [currentLocale, pathname]);
 
     return (
-        <div className="flex items-center space-x-1 lg:space-x-3">
+        <div className="flex items-center space-x-1 lg:space-x-3 bg-white/40 rounded-full px-1 py-1 shadow-2xl">
             {locales.map((locale) => (
                 <button
                     key={locale}
                     onClick={() => handleLocaleChange(locale)}
-                    className={`text-xl font-medium p-0 rounded transition-colors ${currentLocale === locale
-                        ? 'text-[var(--foreground)]'
-                        : 'text-[var(--foreground)]/50 hover:text-foreground'
+                    className={`text-xl font-medium px-2 rounded-full transition-colors ${currentLocale === locale
+                        ? 'bg-green-800/20 text-green-800'
+                        : 'text-green-800'
                         }`}
                 >
                     {locale.toUpperCase()}

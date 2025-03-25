@@ -294,21 +294,13 @@ export default function HomeClient({ locale }: HomeClientProps) {
 
     // Use a completely unique component key for each locale to force complete remount
     return (
-        <div className="flex flex-col min-h-screen bg-gradient-to-b from-background to-foreground/5" key={`home-root-${locale}`}>
+        <div className="flex flex-col text-green-800 min-h-screen bg-gradient-to-b from-background to-foreground/5" key={`home-root-${locale}`}>
             {/* Navigation */}
-            <nav className="px-4 py-4 bg-background/80 backdrop-blur-sm fixed top-0 right-0 left-0 w-full z-10">
+            <nav className="px-4 py-4 bg-background/80 fixed top-0 left-1/2 -translate-x-1/2 z-10">
                 <div className="container mx-auto flex justify-between items-center">
-                    <img src="/small-flowers.png" className="w-10 h-10 mr-2 lg:mr-6 rotate-180" />
-                    <div className="flex items-center space-x-2 lg:space-x-6 text-md lg:text-2xl">
-                        <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('london')}>{nav('london')}</span>
-                        <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('istanbul')}>{nav('istanbul')}</span>
-                        <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('seoul')}>{nav('seoul')}</span>
-                        <span className="hidden lg:inline"> - </span>
-                        <span className="hover:text-primary cursor-pointer transition-colors" onClick={() => scrollTo('contact')}>{nav('contact')}</span>
-                        <span className="hidden lg:inline"> - </span>
-                        <LanguageSwitcher />
-                    </div>
-                    <img src="/small-flowers.png" className="w-10 h-10 ml-2 lg:ml-6" />
+                    <img src="/small-flowers.png" className="w-10 h-10 mr-2 rotate-180" />
+                    <LanguageSwitcher />
+                    <img src="/small-flowers.png" className="w-10 h-10 ml-2" />
                 </div>
             </nav>
 
@@ -322,7 +314,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
             >
                 <div className="container mx-auto flex flex-col gap-8">
                     <img src="/hero.png" className="w-full max-w-screen-lg mx-auto" />
-                    <div className="flex flex-col gap-2 lg:gap-4">
+                    <div className="flex flex-col gap-2 lg:gap-2">
                         <motion.h1
                             className="text-4xl lg:text-7xl font-bold whitespace-nowrap"
                             initial={{ opacity: 0 }}
@@ -339,29 +331,59 @@ export default function HomeClient({ locale }: HomeClientProps) {
                         >
                             {t('description')}
                         </motion.p>
+                        <div className="flex flex-row gap-4 w-auto mx-auto text-2xl lg:text-4xl items-center">
+                            <motion.span
+                                className="cursor-pointer transition-colors"
+                                onClick={() => scrollTo('london')}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.6 }}>
+                                {nav('london')}
+                            </motion.span>
+                            <span className="w-2 h-2 rounded-full bg-green-800"></span>
+                            <motion.span
+                                className="cursor-pointer transition-colors"
+                                onClick={() => scrollTo('istanbul')}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.7 }}>
+                                {nav('istanbul')}
+                            </motion.span>
+                            <span className="w-2 h-2 rounded-full bg-green-800"></span>
+                            <motion.span
+                                className="cursor-pointer transition-colors"
+                                onClick={() => scrollTo('seoul')}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.8 }}>
+                                {nav('seoul')}
+                            </motion.span>
+                        </div>
                     </div>
                 </div>
             </motion.section>
 
             {/* Info Cards */}
             <section id="celebrations" className="py-8 lg:py-16 px-4 w-full flex flex-row justify-center relative container mx-auto">
-                <img src="/flower-line.png" className="flex-1 -mr-16 z-10 hidden lg:flex" />
-                <div className="flex flex-col gap-12 w-full">
+                <div className="flex flex-col gap-6 lg:gap-12 w-full">
                     {celebrations.map((celebration, index) => (
-                        <EventContainer key={index} {...celebration} />
+                        <div key={index} className="flex flex-col items-center gap-6 lg:gap-12">
+                            <EventContainer key={index} {...celebration} />
+                            {index !== celebrations.length - 1 && <img src="/flower-medium.png" className="flex lg:hidden rotate-12 z-10 w-[120px] pointer-events-none" />}
+                        </div>
                     ))}
                 </div>
             </section>
 
-            <section id="contact" className="max-w-screen-lg py-16 px-4 w-full flex flex-row justify-center relative container mx-auto">
+            <section id="contact" className="max-w-screen-sm py-16 px-4 w-full flex flex-row justify-center relative container mx-auto">
                 <div className="flex flex-col gap-4 w-full">
                     <h2 className="text-4xl font-bold">{contact('title')}</h2>
                     <p className="text-2xl">{contact('description')}</p>
 
                     {submitResult && (
                         <div className={`p-4 my-4 text-2xl rounded-md ${submitResult.success
-                            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                            : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'}`}>
+                            ? 'bg-green-800 text-green-200'
+                            : 'bg-red-900 text-red-200'}`}>
                             {submitResult.message}
                         </div>
                     )}
@@ -369,15 +391,15 @@ export default function HomeClient({ locale }: HomeClientProps) {
                     <form onSubmit={handleSubmit}>
                         <div className="text-3xl flex flex-col gap-4">
                             <label htmlFor="name">{contact('form.name')}</label>
-                            <input className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" type="text" id="name" name="name" required />
+                            <input className="bg-[var(--background)] text-green-800 border-2 border-foreground px-4 py-2 rounded-md" type="text" id="name" name="name" required />
                             <label htmlFor="email">{contact('form.email')}</label>
-                            <input className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" type="email" id="email" name="email" required />
+                            <input className="bg-[var(--background)] text-green-800 border-2 border-green-800 px-4 py-2 rounded-md" type="email" id="email" name="email" required />
                             <label htmlFor="message">{contact('form.message')}</label>
-                            <textarea rows={5} className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" id="message" name="message" required />
+                            <textarea rows={5} className="bg-[var(--background)] text-green-800 border-2 border-green-800 px-4 py-2 rounded-md" id="message" name="message" required />
                             <button
-                                className={`mt-8 px-4 py-2 rounded-md flex items-center justify-center ${isSubmitting
-                                    ? 'bg-gray-500 cursor-not-allowed'
-                                    : 'bg-[var(--foreground)] text-[var(--background)] hover:bg-opacity-90'}`}
+                                className={`mt-8 px-4 py-2 rounded-md flex items-center justify-center transition-colors ${isSubmitting
+                                    ? 'bg-green-800/25 text-green-200 cursor-not-allowed'
+                                    : 'bg-green-800 text-green-200 hover:bg-green-900'}`}
                                 type="submit"
                                 disabled={isSubmitting}>
                                 {isSubmitting ? (
@@ -396,7 +418,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
             </section>
 
             {/* Footer */}
-            <footer className="py-6 bg-[var(--foreground)] backdrop-blur-sm mt-32">
+            <footer className="py-6 bg-green-800 backdrop-blur-sm mt-32">
                 <div className="container mx-auto text-center">
                     <p className="text-[var(--background)]">{footer('copyright')}</p>
                 </div>
