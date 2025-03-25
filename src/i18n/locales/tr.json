@@ -32,16 +32,16 @@
                 "date": "8 Haziran 2025",
                 "location": "Korea House, 20 Toegye-ro 36-gil, Jung District",
                 "descriptionTitle": "Program",
-                "description1": "12:00 - Tören",
-                "description2": "12:30 - Fotoğraf Çekimi!",
+                "description1": "12:00 - Toren",
+                "description2": "12:30 - Fotograf Cekimi!",
                 "description3": "13:00 - Pye Baek",
-                "description4": "13:00 - Ziyafet ve Eğlence!"
+                "description4": "13:00 - Ziyafet ve Eglence!"
             }
         }
     },
     "navigation": {
         "london": "Londra",
-        "istanbul": "İstanbul",
+        "istanbul": "Istanbul",
         "seoul": "Seul",
         "contact": "Ilisim"
     },
