@@ -57,6 +57,10 @@
             "sending": "전송 중..."
         }
     },
+    "googleCalendar": {
+        "add": "캘린더에 추가",
+        "title": "혜진 & 에르데니즈 결혼식"
+    },
     "footer": {
         "copyright": "© 2024 우리의 결혼식. 모든 권리 보유."
     }

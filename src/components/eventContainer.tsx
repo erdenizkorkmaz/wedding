@@ -1,5 +1,7 @@
+import i18n from "@/i18n";
 import { motion } from "framer-motion";
 import { CalendarPlus } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface EventContainerProps {
     event: string;
@@ -15,11 +17,14 @@ interface EventContainerProps {
 }
 
 export default function EventContainer(props: EventContainerProps) {
+
+
+    const googleCalendar = useTranslations('googleCalendar');
     // Function to create calendar event
     const addToCalendar = () => {
         // Format for Google Calendar link
         const encodedLocation = encodeURIComponent(props.location);
-        const encodedTitle = encodeURIComponent(`${props.title} - Hyejin & Erdeniz Wedding`);
+        const encodedTitle = encodeURIComponent(`${props.title} - ${googleCalendar("title")}`);
 
         // Create description with timeline
         let description = `${props.descriptionTitle}:\n${props.description1}\n${props.description2}\n${props.description3}`;
@@ -69,6 +74,7 @@ export default function EventContainer(props: EventContainerProps) {
 
                         <button
                             onClick={addToCalendar}
+                            title={googleCalendar("add")}
                             className="flex border-green-800 border rounded-full p-2 items-center cursor-pointer gap-2 w-fit text-md lg:text-lg text-green-800 hover:bg-green-800/20  transition-colors mb-2"
                         >
                             <CalendarPlus className="w-4 h-4" />

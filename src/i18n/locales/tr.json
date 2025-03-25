@@ -57,6 +57,10 @@
             "sending": "Gönderiliyor..."
         }
     },
+    "googleCalendar": {
+        "add": "Takvimde Ekle",
+        "title": "Hyejin & Erdeniz Evlilik"
+    },
     "footer": {
         "copyright": "© 2024 Hyejin & Erdeniz. Tüm hakları saklıdır."
     }

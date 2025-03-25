@@ -53,6 +53,10 @@
             "sending": "Sending..."
         }
     },
+    "googleCalendar": {
+        "add": "Add to Calendar",
+        "title": "Hyejin & Erdeniz Wedding"
+    },
     "footer": {
         "copyright": "© 2024 Our Wedding. All rights reserved."
     }
