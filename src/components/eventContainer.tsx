@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { CalendarPlus } from "lucide-react";
 
 interface EventContainerProps {
+    event: string;
     title: string;
     date: string;
     location: string;
@@ -26,28 +28,22 @@ export default function EventContainer(props: EventContainerProps) {
         }
         const encodedDescription = encodeURIComponent(description);
 
-        // Parse the date
-        const dateParts = props.date.match(/(\d+)(?:st|nd|rd|th)?\s+(\w+)\s+(\d+)/);
+        // Define dates in the correct format for Google Calendar directly
+        // Format: YYYYMMDDTHHMMSS
+        let formattedStartDate = "20250427T130000";
+        let formattedEndDate = "20250427T190000";
 
-        if (!dateParts) {
-            console.error('Could not parse date:', props.date);
-            return;
+        if (props.event === "Istanbul") {
+            formattedStartDate = "20250503T190000";
+            formattedEndDate = "20250503T220000";
+        }
+        if (props.event === "Seoul") {
+            formattedStartDate = "20250608T120000";
+            formattedEndDate = "20250608T150000";
         }
 
-        const day = dateParts[1].padStart(2, '0');
-        const month = {
-            'January': '01', 'February': '02', 'March': '03', 'April': '04',
-            'May': '05', 'June': '06', 'July': '07', 'August': '08',
-            'September': '09', 'October': '10', 'November': '11', 'December': '12'
-        }[dateParts[2]] || '01';
-        const year = dateParts[3];
-
-        // Set default times (start at noon, end at 3pm)
-        const startDate = `${year}${month}${day}T120000`;
-        const endDate = `${year}${month}${day}T150000`;
-
         // Create Google Calendar URL
-        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodedTitle}&dates=${startDate}/${endDate}&details=${encodedDescription}&location=${encodedLocation}&sf=true&output=xml`;
+        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodedTitle}&dates=${formattedStartDate}/${formattedEndDate}&details=${encodedDescription}&location=${encodedLocation}&sf=true&output=xml`;
 
         // Open in new tab
         window.open(googleCalendarUrl, '_blank');
@@ -65,20 +61,19 @@ export default function EventContainer(props: EventContainerProps) {
             <img src="/flower-medium-vertical.png" className="hidden lg:flex absolute -left-8 rotate-12 z-10 h-full pointer-events-none" />
             <div className="bg-white/60 rounded-lg shadow-lg lg:ml-20 lg:pl-28 p-6 lg:p-8 flex flex-col lg:flex-row gap-4 justify-between">
                 <div className="flex flex-col w-full lg:w-1/2 text-green-800">
-                    <h2 className="text-2xl font-bold lg:mb-2">
-                        {props.title} - {props.date}
-                    </h2>
 
-                    <button
-                        onClick={addToCalendar}
-                        className="flex items-center cursor-pointer gap-2 w-fit text-md lg:text-lg text-green-950 hover:text-green-700 transition-colors mb-2"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" className="inline relative -top-[2px]">
-                            <path d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z" />
-                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
-                        </svg>
-                        Add to Calendar
-                    </button>
+                    <div className="flex flex-row gap-4 justify-between lg:justify-start">
+                        <h2 className="text-2xl font-bold lg:mb-2">
+                            {props.title} - {props.date}
+                        </h2>
+
+                        <button
+                            onClick={addToCalendar}
+                            className="flex border-green-800 border rounded-full p-2 items-center cursor-pointer gap-2 w-fit text-md lg:text-lg text-green-800 hover:bg-green-800/20  transition-colors mb-2"
+                        >
+                            <CalendarPlus className="w-4 h-4" />
+                        </button>
+                    </div>
 
                     <p className="text-green-800 text-xl leading-none lg:text-2xl">{props.location}</p>
                     <b className="mt-3 lg:mt-3 text-xl lg:text-2xl">{props.descriptionTitle}</b>

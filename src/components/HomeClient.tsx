@@ -270,6 +270,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
 
     const celebrations = [
         {
+            event: "London",
             title: t('celebrations.UK.title'),
             date: t('celebrations.UK.date'),
             location: t('celebrations.UK.location'),
@@ -281,6 +282,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
             map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2484.409655370034!2d-0.1710957221952322!3d51.48734957180888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876056c2150cfa7%3A0xe0b00e43b3c6998!2sChelsea%20Old%20Town%20Hall!5e0!3m2!1sen!2suk!4v1742837365998!5m2!1sen!2suk"
         },
         {
+            event: "Istanbul",
             title: t('celebrations.TR.title'),
             date: t('celebrations.TR.date'),
             location: t('celebrations.TR.location'),
@@ -291,6 +293,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
             map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.2362249398066!2d28.99280807658783!3d41.04196297134587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab72d8bdbf649%3A0x5e09db9b67067c74!2sSVADBA%20MACKA!5e0!3m2!1sen!2suk!4v1742837318666!5m2!1sen!2suk"
         },
         {
+            event: "Seoul",
             title: t('celebrations.KO.title'),
             date: t('celebrations.KO.date'),
             location: t('celebrations.KO.location'),
