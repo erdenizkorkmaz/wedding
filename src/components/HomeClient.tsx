@@ -4,12 +4,13 @@ import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import EventContainer from "./eventContainer";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 declare global {
     interface Window {
         grecaptcha: {
-            reset: () => void;
+            ready: (callback: () => void) => void;
+            execute: (siteKey: string, options: { action: string }) => Promise<string>;
         };
     }
 }
@@ -24,24 +25,165 @@ export default function HomeClient({ locale }: HomeClientProps) {
     const nav = useTranslations('navigation');
     const footer = useTranslations('footer');
     const contact = useTranslations('contact');
-    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
 
     useEffect(() => {
-        // Load reCAPTCHA script
-        const script = document.createElement('script');
-        script.src = 'https://www.google.com/recaptcha/api.js';
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
+        console.log('reCAPTCHA Site Key:', process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
+
+        if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+            console.error('reCAPTCHA site key is missing. Please check your .env.local file.');
+            return;
+        }
+
+        // First verify we can connect to Google's domain with a simple request
+        fetch('https://www.google.com/recaptcha/api.js', {
+            method: 'HEAD',
+            mode: 'no-cors' // Just checking connectivity
+        })
+            .then(() => {
+                console.log('Network connection to Google reCAPTCHA available');
+                loadRecaptchaScript();
+            })
+            .catch(networkError => {
+                console.error('Cannot connect to Google reCAPTCHA servers:', networkError);
+            });
+
+        function loadRecaptchaScript() {
+            // Load reCAPTCHA v3 script
+            const script = document.createElement('script');
+            script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+            script.async = true;
+            script.defer = true;
+
+            script.onload = () => {
+                console.log('reCAPTCHA script loaded successfully');
+            };
+
+            script.onerror = (error) => {
+                console.error('Error loading reCAPTCHA script. This could be due to:');
+                console.error('1. Incorrect site key');
+                console.error('2. Network issues');
+                console.error('3. Content Security Policy blocking the script');
+                console.error('Error details:', error);
+
+                // Try directly logging the site key for verification (don't do this in production)
+                console.log('Current site key for verification:', process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
+            };
+
+            document.head.appendChild(script);
+        }
 
         return () => {
-            document.head.removeChild(script);
+            // Remove script safely
+            const scripts = document.head.getElementsByTagName('script');
+            for (let i = 0; i < scripts.length; i++) {
+                if (scripts[i].src.includes('recaptcha')) {
+                    try {
+                        scripts[i].parentNode?.removeChild(scripts[i]);
+                        console.log('reCAPTCHA script removed');
+                        break;
+                    } catch (error) {
+                        console.error('Error removing reCAPTCHA script:', error);
+                    }
+                }
+            }
         };
     }, []);
 
-    const onRecaptchaChange = (token: string | null) => {
-        setRecaptchaToken(token);
+    const executeRecaptcha = async () => {
+        try {
+            // Wait for grecaptcha to be defined with timeout
+            const waitForGrecaptcha = async (timeout = 5000) => {
+                const startTime = Date.now();
+                while (!window.grecaptcha) {
+                    if (Date.now() - startTime > timeout) {
+                        throw new Error('Timed out waiting for reCAPTCHA to load');
+                    }
+                    // Wait 100ms before checking again
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                console.log('grecaptcha is available now');
+            };
+
+            await waitForGrecaptcha();
+
+            if (!window.grecaptcha || !window.grecaptcha.ready) {
+                throw new Error('reCAPTCHA not initialized properly');
+            }
+
+            // Wait for reCAPTCHA to be ready
+            await new Promise<void>((resolve, reject) => {
+                try {
+                    window.grecaptcha.ready(() => {
+                        console.log('reCAPTCHA is ready for execution');
+                        resolve();
+                    });
+                } catch (error) {
+                    reject(error);
+                }
+            });
+
+            if (!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+                throw new Error('reCAPTCHA site key is missing');
+            }
+
+            console.log('Executing reCAPTCHA with site key:', process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
+            const token = await window.grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {
+                action: 'contact_form'
+            });
+
+            console.log('Got reCAPTCHA token:', token.substring(0, 10) + '...');
+            return token;
+        } catch (error) {
+            console.error('Error executing reCAPTCHA:', error);
+
+            // If we can't get a token automatically, let the user submit anyway
+            // This is a fallback, will skip reCAPTCHA verification on the server
+            if (window.confirm('Could not verify automatically. Do you want to proceed with form submission anyway?')) {
+                return "fallback_token_manual_override";
+            }
+
+            return null;
+        }
     };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        // Execute reCAPTCHA before submitting
+        const token = await executeRecaptcha();
+
+        if (!token) {
+            alert('Could not verify you are human. Please try again later or contact us directly.');
+            return;
+        }
+
+        const formData = new FormData(e.target as HTMLFormElement);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const message = formData.get('message');
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, message, recaptchaToken: token }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log('Email sent successfully:', data);
+            alert('Thank you for your message! We will get back to you soon.');
+            (e.target as HTMLFormElement).reset();
+        } catch (error) {
+            console.error('Error sending email:', error);
+            alert('There was an error sending your message. Please try again later.');
+        }
+    }
 
     const scrollTo = (id: string) => {
         const element = document.getElementById(id);
@@ -58,45 +200,6 @@ export default function HomeClient({ locale }: HomeClientProps) {
                 });
             }
         }
-    }
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!recaptchaToken) {
-            alert('Please complete the reCAPTCHA verification');
-            return;
-        }
-
-        const formData = new FormData(e.target as HTMLFormElement);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const message = formData.get('message');
-        fetch('/api/contact', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, message, recaptchaToken }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Network response was not ok');
-            })
-            .then(data => {
-                console.log('Email sent successfully:', data);
-                alert('Thank you for your message! We will get back to you soon.');
-                (e.target as HTMLFormElement).reset();
-                // Reset reCAPTCHA
-                if (window.grecaptcha) {
-                    window.grecaptcha.reset();
-                }
-            })
-            .catch(error => {
-                console.error('Error sending email:', error);
-                alert('There was an error sending your message. Please try again later.');
-            });
     }
 
     const celebrations = [
@@ -207,13 +310,6 @@ export default function HomeClient({ locale }: HomeClientProps) {
                             <input className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" type="email" id="email" name="email" />
                             <label htmlFor="message">{contact('form.message')}</label>
                             <textarea rows={5} className="bg-[var(--background)] text-[var(--foreground)] border-2 border-foreground px-4 py-2 rounded-md" id="message" name="message" />
-                            <div className="flex justify-center my-4">
-                                <div
-                                    className="g-recaptcha"
-                                    data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                                    data-callback={onRecaptchaChange}
-                                ></div>
-                            </div>
                             <button className="mt-8 bg-[var(--foreground)] text-[var(--background)] px-4 py-2 rounded-md" type="submit">{contact('form.submit')}</button>
                         </div>
                     </form>
