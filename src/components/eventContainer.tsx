@@ -20,7 +20,7 @@ export default function EventContainer(props: EventContainerProps) {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true, amount: 1 }}
+            viewport={{ once: true, amount: 0.8 }}
         >
             <img src="/flower-medium-vertical.png" className="hidden lg:flex absolute -left-4 rotate-12 z-10 h-full pointer-events-none" />
             <div className="bg-white/40 rounded-lg shadow-lg lg:ml-20 lg:pl-28 p-6 lg:p-8 flex flex-col lg:flex-row gap-4 justify-between">

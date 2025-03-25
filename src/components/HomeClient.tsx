@@ -296,12 +296,10 @@ export default function HomeClient({ locale }: HomeClientProps) {
     return (
         <div className="flex flex-col text-green-800 min-h-screen bg-gradient-to-b from-background to-foreground/5" key={`home-root-${locale}`}>
             {/* Navigation */}
-            <nav className="px-4 py-4 bg-background/80 fixed top-0 left-1/2 -translate-x-1/2 z-10">
-                <div className="container mx-auto flex justify-between items-center">
-                    <img src="/small-flowers.png" className="w-10 h-10 mr-2 rotate-180" />
-                    <LanguageSwitcher />
-                    <img src="/small-flowers.png" className="w-10 h-10 ml-2" />
-                </div>
+            <nav className="px-4 py-4 bg-background/80 fixed top-2 z-10 flex flex-row justify-center w-full ">
+                <img src="/small-flowers.png" className="w-10 h-10 mr-2 rotate-180" />
+                <LanguageSwitcher />
+                <img src="/small-flowers.png" className="w-10 h-10 ml-2" />
             </nav>
 
             {/* Hero Section */}
@@ -314,7 +312,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
             >
                 <div className="container mx-auto flex flex-col gap-8">
                     <img src="/hero.png" className="w-full max-w-screen-lg mx-auto" />
-                    <div className="flex flex-col gap-2 lg:gap-2">
+                    <div className="flex flex-col gap-2">
                         <motion.h1
                             className="text-4xl lg:text-7xl font-bold whitespace-nowrap"
                             initial={{ opacity: 0 }}
@@ -331,7 +329,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                         >
                             {t('description')}
                         </motion.p>
-                        <div className="flex flex-row gap-4 w-auto mx-auto text-2xl lg:text-4xl items-center">
+                        <div className="flex flex-row gap-2 lg:gap-4 w-auto mx-auto text-2xl lg:text-4xl items-center">
                             <motion.span
                                 className="cursor-pointer transition-colors"
                                 onClick={() => scrollTo('london')}
@@ -340,7 +338,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                                 transition={{ delay: 0.6 }}>
                                 {nav('london')}
                             </motion.span>
-                            <span className="w-2 h-2 rounded-full bg-green-800"></span>
+                            <span className="w-1 h-1 lg:w-2 lg:h-2 rounded-full bg-green-800"></span>
                             <motion.span
                                 className="cursor-pointer transition-colors"
                                 onClick={() => scrollTo('istanbul')}
@@ -349,7 +347,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                                 transition={{ delay: 0.7 }}>
                                 {nav('istanbul')}
                             </motion.span>
-                            <span className="w-2 h-2 rounded-full bg-green-800"></span>
+                            <span className="w-1 h-1 lg:w-2 lg:h-2 rounded-full bg-green-800"></span>
                             <motion.span
                                 className="cursor-pointer transition-colors"
                                 onClick={() => scrollTo('seoul')}
@@ -364,10 +362,10 @@ export default function HomeClient({ locale }: HomeClientProps) {
             </motion.section>
 
             {/* Info Cards */}
-            <section id="celebrations" className="py-8 lg:py-16 px-4 w-full flex flex-row justify-center relative container mx-auto">
+            <section id="celebrations" className="py-8 lg:py-16 px-4 w-full flex flex-row justify-center relative container mx-auto overflow-hidden">
                 <div className="flex flex-col gap-6 lg:gap-12 w-full">
                     {celebrations.map((celebration, index) => (
-                        <div key={index} className="flex flex-col items-center gap-6 lg:gap-12">
+                        <div key={index} className="flex flex-col items-center gap-6 lg:gap-12 w-full max-w-[1000px] mx-auto">
                             <EventContainer key={index} {...celebration} />
                             {index !== celebrations.length - 1 && <img src="/flower-medium.png" className="flex lg:hidden rotate-12 z-10 w-[120px] pointer-events-none" />}
                         </div>
@@ -399,7 +397,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                             <button
                                 className={`mt-8 px-4 py-2 rounded-md flex items-center justify-center transition-colors ${isSubmitting
                                     ? 'bg-green-800/25 text-green-200 cursor-not-allowed'
-                                    : 'bg-green-800 text-green-200 hover:bg-green-900'}`}
+                                    : 'bg-green-950 text-green-200 hover:bg-green-900'}`}
                                 type="submit"
                                 disabled={isSubmitting}>
                                 {isSubmitting ? (
@@ -418,7 +416,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
             </section>
 
             {/* Footer */}
-            <footer className="py-6 bg-green-800 backdrop-blur-sm mt-32">
+            <footer className="py-6 bg-green-950 backdrop-blur-sm mt-32">
                 <div className="container mx-auto text-center">
                     <p className="text-[var(--background)]">{footer('copyright')}</p>
                 </div>
