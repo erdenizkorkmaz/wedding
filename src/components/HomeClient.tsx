@@ -336,7 +336,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                             {t('title')}
                         </motion.h1>
                         <motion.p
-                            className="text-xl lg:text-4xl"
+                            className="text-xl lg:text-5xl leading-none"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.5 }}
