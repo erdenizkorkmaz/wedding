@@ -1,12 +1,13 @@
 {
     "home": {
-        "title": "결혼식에 오신 것을 환영합니다",
-        "description": "우리는 결혼합니다! 특별한 날에 함께해 주세요.",
+        "title": "혜진 & 에르데니즈",
+        "description": "결혼식에 초대합니다",
         "learnMore": "더 알아보기",
         "date": "날짜 및 시간",
         "location": "장소",
         "rsvp": "참석 여부",
-        "scrollDown": "아래로 스크롤하여 더 보기",
+        "scrollDown": "아래로 스크롤하여 탐색하세요",
+        "celebrate": "축하하기!",
         "celebrations": {
             "UK": {
                 "title": "런던",

@@ -24,20 +24,20 @@ export default function EventContainer(props: EventContainerProps) {
         >
             <img src="/flower-medium-vertical.png" className="hidden lg:flex absolute -left-4 rotate-12 z-10 h-full pointer-events-none" />
             <div className="bg-white/40 rounded-lg shadow-lg lg:ml-20 lg:pl-28 p-6 lg:p-8 flex flex-col lg:flex-row gap-4 justify-between">
-                <div className="flex flex-col w-full lg:w-1/2">
+                <div className="flex flex-col w-full lg:w-1/2 text-green-800">
                     <h2 className="text-2xl font-bold lg:mb-4">
                         {props.title} - {props.date}
                     </h2>
-                    <p className="text-foreground text-xl leading-none lg:text-2xl">{props.location}</p>
+                    <p className="text-green-800 text-xl leading-none lg:text-2xl">{props.location}</p>
                     <b className="mt-3 lg:mt-3 text-xl lg:text-2xl">{props.descriptionTitle}</b>
                     <div className="flex flex-col gap-1 text-xl lg:text-2xl">
-                        <p className="text-foreground leading-none">{props.description1}</p>
-                        <p className="text-foreground leading-none">{props.description2}</p>
-                        <p className="text-foreground leading-none">{props.description3}</p>
-                        <p className="text-foreground leading-none">{props.description4}</p>
+                        <p className="text-green-800 leading-none">{props.description1}</p>
+                        <p className="text-green-800 leading-none">{props.description2}</p>
+                        <p className="text-green-800 leading-none">{props.description3}</p>
+                        <p className="text-green-800 leading-none">{props.description4}</p>
                     </div>
                 </div>
-                <div className="google-maps-container w-full lg:w-1/2">
+                <div className="google-maps-container w-full lg:w-1/2 h-[300px] lg:h-auto">
                     <iframe
                         src={props.map}
                         width="100%"
@@ -45,6 +45,7 @@ export default function EventContainer(props: EventContainerProps) {
                         style={{ border: 0 }}
                         allowFullScreen
                         loading="lazy"
+                        className="max-w-full"
                     ></iframe>
                 </div>
             </div>

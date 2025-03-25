@@ -39,7 +39,7 @@ export default function LanguageSwitcher() {
                 <button
                     key={locale}
                     onClick={() => handleLocaleChange(locale)}
-                    className={`text-xl font-medium px-2 rounded-full transition-colors ${currentLocale === locale
+                    className={`text-xl font-medium px-2 rounded-full cursor-pointer transition-colors ${currentLocale === locale
                         ? 'bg-green-800/20 text-green-800'
                         : 'text-green-800'
                         }`}

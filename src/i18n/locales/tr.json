@@ -1,12 +1,13 @@
 {
     "home": {
         "title": "Hyejin & Erdeniz",
-        "description": "sizi dugunlerine davet ediyor",
+        "description": "evliliklerini kutlamak icin<br/> sizleri davet ediyor",
         "learnMore": "Daha Fazla Bilgi",
         "date": "Tarih ve Saat",
         "location": "Konum",
         "rsvp": "Katilim Onayi",
-        "scrollDown": "Keşfetmek için kaydirin",
+        "scrollDown": "Keşfetmek için aşağı kaydırın",
+        "celebrate": "Kutla!",
         "celebrations": {
             "UK": {
                 "title": "Londra",
