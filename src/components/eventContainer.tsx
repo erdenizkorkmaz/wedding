@@ -1,4 +1,3 @@
-import i18n from "@/i18n";
 import { motion } from "framer-motion";
 import { CalendarPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
