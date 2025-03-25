@@ -378,14 +378,6 @@ export default function HomeClient({ locale }: HomeClientProps) {
                     <h2 className="text-4xl font-bold">{contact('title')}</h2>
                     <p className="text-2xl">{contact('description')}</p>
 
-                    {submitResult && (
-                        <div className={`p-4 my-4 text-2xl rounded-md ${submitResult.success
-                            ? 'bg-green-800 text-green-200'
-                            : 'bg-red-900 text-red-200'}`}>
-                            {submitResult.message}
-                        </div>
-                    )}
-
                     <form onSubmit={handleSubmit}>
                         <div className="text-3xl flex flex-col gap-4">
                             <label htmlFor="name">{contact('form.name')}</label>
@@ -394,6 +386,15 @@ export default function HomeClient({ locale }: HomeClientProps) {
                             <input className="bg-[var(--background)] text-green-800 border-2 border-green-800 px-4 py-2 rounded-md" type="email" id="email" name="email" required />
                             <label htmlFor="message">{contact('form.message')}</label>
                             <textarea rows={5} className="bg-[var(--background)] text-green-800 border-2 border-green-800 px-4 py-2 rounded-md" id="message" name="message" required />
+
+                            {submitResult && (
+                                <div className={`p-4 my-4 text-2xl rounded-md ${submitResult.success
+                                    ? 'bg-green-800 text-green-200'
+                                    : 'bg-red-900 text-red-200'}`}>
+                                    {submitResult.message}
+                                </div>
+                            )}
+
                             <button
                                 className={`mt-8 px-4 py-2 rounded-md flex items-center justify-center transition-colors ${isSubmitting
                                     ? 'bg-green-800/25 text-green-200 cursor-not-allowed'
