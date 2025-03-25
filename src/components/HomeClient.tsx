@@ -307,7 +307,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
     return (
         <div className="flex flex-col text-green-800 min-h-screen bg-gradient-to-b from-background to-foreground/5 overflow-x-hidden" key={`home-root-${locale}`}>
             {/* Navigation */}
-            <nav className="px-4 py-4 bg-background/80 fixed top-2 z-10 flex flex-row justify-center w-full">
+            <nav className="px-4 py-4 fixed top-2 z-10 flex flex-row justify-center w-full">
                 <img src="/small-flowers.png" className="w-10 h-10 mr-2 rotate-180" />
                 <LanguageSwitcher />
                 <img src="/small-flowers.png" className="w-10 h-10 ml-2" />
