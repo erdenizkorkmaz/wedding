@@ -46,7 +46,7 @@
         "contact": "Ilisim"
     },
     "contact": {
-        "title": "Ilisim",
+        "title": "Iletisim",
         "description": "Bize mesaj gonderin! Lutfen asagidaki formu kullanarak bize ulasin.",
         "form": {
             "name": "Adiniz",
