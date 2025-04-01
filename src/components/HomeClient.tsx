@@ -2,11 +2,10 @@
 
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import EventContainer from "./eventContainer";
 import { useEffect, useState } from "react";
-import confetti from 'canvas-confetti';
-
 
 declare global {
     interface Window {
@@ -33,11 +32,28 @@ export default function HomeClient({ locale }: HomeClientProps) {
     const [submitResult, setSubmitResult] = useState<{ success?: boolean; message?: string } | null>(null);
 
     // Function to trigger confetti
-    const throwConfetti = () => {
+    const throwConfetti = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        const button = event.currentTarget;
+        const rect = button.getBoundingClientRect();
+        const buttonCenter = {
+            x: (rect.left + rect.right) / 2 / window.innerWidth,
+            y: (rect.top + rect.bottom) / 2 / window.innerHeight
+        };
+
+        const confetti = (await import('canvas-confetti')).default;
         confetti({
             particleCount: 150,
             spread: 180,
-            origin: { y: 0.6 }
+            origin: buttonCenter,
+            //colors: ['#166534', '#15803d', '#16a34a', '#22c55e', '#4ade80']
+            colors: [
+                '#166534', // dark green
+                '#15803d', // medium green
+                '#16a34a', // light green
+                '#fbbf24', // warm yellow
+                '#f59e0b', // golden yellow
+                '#4ade80'  // deep gold
+            ]
         });
     };
 
@@ -311,9 +327,9 @@ export default function HomeClient({ locale }: HomeClientProps) {
         <div className="flex flex-col text-green-800 min-h-screen bg-gradient-to-b from-background to-foreground/5 overflow-x-hidden" key={`home-root-${locale}`}>
             {/* Navigation */}
             <nav className="px-4 py-4 fixed top-2 z-10 flex flex-row justify-center w-full">
-                <img src="/small-flowers.png" className="w-10 h-10 mr-2 rotate-180" />
+                <Image src="/small-flowers.png" alt="Flower decoration" width={40} height={40} className="mr-2 rotate-180" />
                 <LanguageSwitcher />
-                <img src="/small-flowers.png" className="w-10 h-10 ml-2" />
+                <Image src="/small-flowers.png" alt="Flower decoration" width={40} height={40} className="ml-2" />
             </nav>
 
             {/* Hero Section */}
@@ -325,7 +341,14 @@ export default function HomeClient({ locale }: HomeClientProps) {
                 key={`hero-${locale}`}
             >
                 <div className="container mx-auto flex flex-col gap-8">
-                    <img src="/hero.png" className="w-full max-w-screen-lg mx-auto" />
+                    <Image
+                        src="/hero.png"
+                        alt="Wedding hero image"
+                        width={1200}
+                        height={600}
+                        className="w-full lg:w-4/6 max-w-screen-lg mx-auto"
+                        priority
+                    />
                     <div className="flex flex-col gap-2">
                         <motion.h1
                             className="text-4xl lg:text-7xl font-bold whitespace-nowrap"
@@ -335,14 +358,13 @@ export default function HomeClient({ locale }: HomeClientProps) {
                         >
                             {t('title')}
                         </motion.h1>
-                        <motion.p
+                        <motion.div
                             className="text-xl lg:text-5xl leading-none"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.5 }}
-                        >
-                            <div dangerouslySetInnerHTML={{ __html: t('description') }} />
-                        </motion.p>
+                            dangerouslySetInnerHTML={{ __html: t('description') }}
+                        />
                         <div className="flex flex-wrap justify-center gap-2 lg:gap-4 w-auto mx-auto text-xl lg:text-4xl items-center">
                             <motion.span
                                 className="cursor-pointer transition-colors"
@@ -378,7 +400,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.9 }}
                         >
-                            {t('celebrate')} <img src="/flower-medium.png" className="w-10 ml-2 inline-block" />
+                            {t('celebrate')} <Image src="/flower-medium.png" alt="Flower decoration" width={40} height={40} className="w-10 ml-2 inline-block" />
                         </motion.button>
                     </div>
                 </div>
@@ -390,7 +412,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                     {celebrations.map((celebration, index) => (
                         <div key={index} className="flex flex-col items-center gap-6 lg:gap-12 w-full max-w-[1000px] mx-auto">
                             <EventContainer key={index} {...celebration} />
-                            {index !== celebrations.length - 1 && <img src="/flower-medium.png" className="flex lg:hidden rotate-12 z-10 w-[120px] pointer-events-none" />}
+                            {index !== celebrations.length - 1 && <Image src="/flower-medium.png" alt="Flower decoration" width={120} height={120} className="flex lg:hidden rotate-12 z-10 w-[120px] pointer-events-none" />}
                         </div>
                     ))}
                 </div>

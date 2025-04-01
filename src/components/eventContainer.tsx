@@ -1,6 +1,35 @@
 import { motion } from "framer-motion";
 import { CalendarPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+
+// Create a separate Map component for dynamic loading
+const GoogleMap = ({ src, title }: { src: string, title: string }) => (
+    <iframe
+        src={src}
+        title={title}
+        width="100%"
+        height="100%"
+        style={{ border: 0 }}
+        allowFullScreen
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+        className="max-w-full rounded-lg"
+    />
+);
+
+// Dynamically import the Map component
+const DynamicMap = dynamic(() => Promise.resolve(GoogleMap), {
+    ssr: false,
+    loading: () => (
+        <div className="w-full h-full bg-green-50/50 animate-pulse rounded-lg flex items-center justify-center">
+            Loading map...
+        </div>
+    ),
+});
 
 interface EventContainerProps {
     event: string;
@@ -16,8 +45,7 @@ interface EventContainerProps {
 }
 
 export default function EventContainer(props: EventContainerProps) {
-
-
+    const [isMapVisible, setIsMapVisible] = useState(false);
     const googleCalendar = useTranslations('googleCalendar');
     // Function to create calendar event
     const addToCalendar = () => {
@@ -59,10 +87,18 @@ export default function EventContainer(props: EventContainerProps) {
             className="relative flex flex-col w-full"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            onAnimationComplete={() => setIsMapVisible(true)}
             transition={{ duration: 0.8 }}
             viewport={{ once: true, amount: 0.6 }}
         >
-            <img src="/flower-medium-vertical.png" className="hidden lg:flex absolute -left-5 rotate-12 z-10 h-full pointer-events-none" />
+            <Image
+                src="/flower-medium-vertical.png"
+                alt="Decorative flower"
+                width={200}
+                height={800}
+                className="hidden lg:flex absolute -left-5 rotate-12 z-10 h-full w-auto pointer-events-none"
+                style={{ objectFit: 'contain' }}
+            />
             <div className="bg-white/60 rounded-lg shadow-lg lg:ml-20 lg:pl-28 p-6 lg:p-8 flex flex-col lg:flex-row gap-4 justify-between">
                 <div className="flex flex-col w-full lg:w-1/2 text-green-800">
 
@@ -90,18 +126,21 @@ export default function EventContainer(props: EventContainerProps) {
                     </div>
                 </div>
                 <div className="google-maps-container w-full lg:w-1/2 h-[300px] lg:h-auto">
-                    <iframe
-                        src={props.map}
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0 }}
-                        allowFullScreen
-                        loading="lazy"
-                        className="max-w-full"
-                    ></iframe>
+                    {isMapVisible && (
+                        <DynamicMap
+                            src={props.map}
+                            title={`${props.title} - ${props.location} Map`}
+                        />
+                    )}
                 </div>
             </div>
-            <img src="/small-flowers.png" className="h-1/5 lg:h-1/3 hidden lg:flex absolute -bottom-8 -right-8 rotate-12 pointer-events-none" />
+            <Image
+                src="/small-flowers.png"
+                alt="Decorative flowers"
+                width={100}
+                height={100}
+                className="h-1/5 lg:h-1/3 hidden lg:flex absolute -bottom-8 -right-8 rotate-12 pointer-events-none"
+            />
         </motion.div>
     );
 }

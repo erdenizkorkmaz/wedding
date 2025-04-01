@@ -2,13 +2,7 @@ import type { Metadata } from "next";
 import { Nanum_Brush_Script } from "next/font/google";
 import "./globals.css";
 
-const fontSans = Nanum_Brush_Script({
-  variable: "--font-nanum-brush-script",
-  weight: "400",
-  subsets: ["latin"],
-});
-
-const fontMono = Nanum_Brush_Script({
+const fontNanum = Nanum_Brush_Script({
   variable: "--font-nanum-brush-script",
   weight: "400",
   subsets: ["latin"],
@@ -45,8 +39,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="preconnect" href="https://maps.googleapis.com" />
+        <link rel="preconnect" href="https://maps.gstatic.com" />
+      </head>
       <body
-        className={`${fontSans.variable} ${fontMono.variable} antialiased`}
+        className={`${fontNanum.variable} antialiased`}
       >
         {children}
       </body>
