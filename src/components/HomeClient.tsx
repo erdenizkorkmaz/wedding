@@ -334,7 +334,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
 
             {/* Hero Section */}
             <motion.section
-                className="pt-32 pb-20 px-4 text-center"
+                className="pt-24 lg:pt-32 pb-20 px-4 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
