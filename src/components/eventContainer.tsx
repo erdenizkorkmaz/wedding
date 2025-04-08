@@ -2,34 +2,6 @@ import { motion } from "framer-motion";
 import { CalendarPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
-
-// Create a separate Map component for dynamic loading
-const GoogleMap = ({ src, title }: { src: string, title: string }) => (
-    <iframe
-        src={src}
-        title={title}
-        width="100%"
-        height="100%"
-        style={{ border: 0 }}
-        allowFullScreen
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-        className="max-w-full rounded-lg"
-    />
-);
-
-// Dynamically import the Map component
-const DynamicMap = dynamic(() => Promise.resolve(GoogleMap), {
-    ssr: false,
-    loading: () => (
-        <div className="w-full h-full bg-green-50/50 animate-pulse rounded-lg flex items-center justify-center">
-            Loading map...
-        </div>
-    ),
-});
 
 interface EventContainerProps {
     event: string;
@@ -45,7 +17,6 @@ interface EventContainerProps {
 }
 
 export default function EventContainer(props: EventContainerProps) {
-    const [isMapVisible, setIsMapVisible] = useState(false);
     const googleCalendar = useTranslations('googleCalendar');
     // Function to create calendar event
     const addToCalendar = () => {
@@ -87,7 +58,6 @@ export default function EventContainer(props: EventContainerProps) {
             className="relative flex flex-col w-full"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            onAnimationComplete={() => setIsMapVisible(true)}
             transition={{ duration: 0.8 }}
             viewport={{ once: true, amount: 0.6 }}
         >
@@ -126,12 +96,17 @@ export default function EventContainer(props: EventContainerProps) {
                     </div>
                 </div>
                 <div className="google-maps-container w-full lg:w-1/2 h-[300px] lg:h-auto">
-                    {isMapVisible && (
-                        <DynamicMap
-                            src={props.map}
-                            title={`${props.title} - ${props.location} Map`}
-                        />
-                    )}
+                    <iframe
+                        src={props.map}
+                        title={`${props.title} - ${props.location} Map`}
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        referrerPolicy="no-referrer-when-downgrade"
+                        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+                        className="max-w-full rounded-lg"
+                    />
                 </div>
             </div>
             <Image
