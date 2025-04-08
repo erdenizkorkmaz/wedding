@@ -445,7 +445,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                     <section id="contact_host" className="px-4 w-full container mx-auto max-w-[680px] mt-8">
                         <div className="bg-white/60 rounded-lg shadow-lg py-8 px-2 flex flex-col items-center gap-4 justify-between">
                             <div className="text-xl lg:text-3xl">
-                                호스트에게 연락하기
+                                혼주에게 연락하기
                             </div>
                             <div className="flex flex-row lg:flex-row items-center gap-4 lg:gap-8">
                                 <span className="text-lg lg:text-2xl text-green-900">신부 측 혼주</span>
