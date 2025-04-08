@@ -6,6 +6,8 @@ import Image from "next/image";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import EventContainer from "./eventContainer";
 import { useEffect, useState } from "react";
+import { Landmark, MessageCircle } from "lucide-react";
+import { Phone } from "lucide-react";
 
 declare global {
     interface Window {
@@ -418,6 +420,66 @@ export default function HomeClient({ locale }: HomeClientProps) {
                 </div>
             </section>
 
+            {locale === 'ko' && (
+                <>
+                    {/* Family Bank */}
+                    <section id="family_bank" className="px-4 w-full container mx-auto max-w-[680px] mt-8">
+                        <div className="bg-white/60 rounded-lg shadow-lg py-8 px-2 flex flex-col items-center gap-2 justify-between">
+                    <span className="text-lg lg:text-2xl text-center">
+                        신랑신부에게 따뜻한 축하의 말을 전해주세요.<br/> 아래 계좌로 선물을 보내주시며 축복을 나눠주세요.                    
+                    </span>
+                    <ul className="flex flex-col gap-0 mt-2 text-lg lg:text-xl">
+                        <li className="flex flex-row gap-2 items-center">
+                            <span>하종학:</span>
+                            <span>농협은행 : 084-02-179986</span>
+                        </li>
+                        <li className="flex flex-row gap-2 items-center">
+                            <span>권순옥:</span>
+                            <span>국민은행 : 762-24-0049730</span>
+                        </li>
+                    </ul>
+                </div>
+                    </section>
+
+                    {/* Contact Host */}
+                    <section id="contact_host" className="px-4 w-full container mx-auto max-w-[680px] mt-8">
+                        <div className="bg-white/60 rounded-lg shadow-lg py-8 px-2 flex flex-col items-center gap-4 justify-between">
+                            <div className="text-xl lg:text-3xl">
+                                호스트에게 연락하기
+                            </div>
+                            <div className="flex flex-row lg:flex-row items-center gap-4 lg:gap-8">
+                                <span className="text-lg lg:text-2xl text-green-900">신부 측 혼주</span>
+                                <ul className="flex flex-col gap-3">
+                                    <li className="flex flex-row  gap-2 items-center">
+                                        <span className="text-xl lg:text-2xl min-w-[80px] lg:min-w-[100px]"><span className="text-green-900/50">아버지</span> 하종학</span>
+                                        <div className="flex flex-row gap-2 lg:gap-4">
+                                            <a href="tel:+8201053586212" className="border border-green-900 rounded-full text-green-900 p-2 hover:bg-green-900/10 transition-colors">
+                                                <Phone size={14} />
+                                            </a>
+                                            <a className="border border-green-900 rounded-full text-green-900 p-2 hover:bg-green-900/10 transition-colors">
+                                                <MessageCircle size={14} />
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li className="flex flex-row gap-2 items-center">
+                                        <span className="text-xl lg:text-2xl min-w-[80px] lg:min-w-[100px]"><span className="text-green-900/50">어머니</span> 권순옥</span>
+                                        <div className="flex flex-row gap-2 lg:gap-4">
+                                            <a href="tel:+8201063546212" className="border border-green-900 rounded-full text-green-900 p-2 hover:bg-green-900/10 transition-colors">
+                                                <Phone size={14} />
+                                            </a>
+                                            <a className="border border-green-900 rounded-full text-green-900 p-2 hover:bg-green-900/10 transition-colors">
+                                                <MessageCircle size={14} />
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </>
+            )}
+
+            {/* Contact Form */}
             <section id="contact" className="max-w-screen-sm py-16 px-4 w-full flex flex-row justify-center relative container mx-auto">
                 <div className="flex flex-col gap-4 w-full">
                     <h2 className="text-4xl font-bold leading-none">{contact('title')}</h2>
