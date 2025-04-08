@@ -6,7 +6,7 @@ import Image from "next/image";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import EventContainer from "./eventContainer";
 import { useEffect, useState } from "react";
-import { Landmark, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { Phone } from "lucide-react";
 
 declare global {
