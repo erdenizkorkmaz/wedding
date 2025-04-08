@@ -8,6 +8,7 @@ import EventContainer from "./eventContainer";
 import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
 import { Phone } from "lucide-react";
+import Flower from "./flower";
 
 declare global {
     interface Window {
@@ -422,58 +423,64 @@ export default function HomeClient({ locale }: HomeClientProps) {
 
             {locale === 'ko' && (
                 <>
-                    {/* Family Bank */}
-                    <section id="family_bank" className="px-4 w-full container mx-auto max-w-[680px] mt-8">
-                        <div className="bg-white/60 rounded-lg shadow-lg py-8 px-2 flex flex-col items-center gap-2 justify-between">
-                    <span className="text-lg lg:text-2xl text-center">
-                        신랑신부에게 따뜻한 축하의 말을 전해주세요.<br/> 아래 계좌로 선물을 보내주시며 축복을 나눠주세요.                    
-                    </span>
-                    <ul className="flex flex-col gap-0 mt-2 text-lg lg:text-xl">
-                        <li className="flex flex-row gap-2 items-center">
-                            <span>하종학:</span>
-                            <span>농협은행 : 084-02-179986</span>
-                        </li>
-                        <li className="flex flex-row gap-2 items-center">
-                            <span>권순옥:</span>
-                            <span>국민은행 : 762-24-0049730</span>
-                        </li>
-                    </ul>
-                </div>
-                    </section>
+
 
                     {/* Contact Host */}
                     <section id="contact_host" className="px-4 w-full container mx-auto max-w-[680px] mt-8">
-                        <div className="bg-white/60 rounded-lg shadow-lg py-8 px-2 flex flex-col items-center gap-4 justify-between">
+                        <div className="bg-green-900 rounded-lg shadow-lg py-8 px-2 flex flex-col items-center gap-4 justify-between text-white relative overflow-hidden">
                             <div className="text-xl lg:text-3xl">
                                 혼주에게 연락하기
                             </div>
                             <div className="flex flex-row lg:flex-row items-center gap-4 lg:gap-8">
-                                <span className="text-lg lg:text-2xl text-green-900">신부 측 혼주</span>
+                                <span className="text-lg lg:text-2xl">신부 측 혼주</span>
                                 <ul className="flex flex-col gap-3">
                                     <li className="flex flex-row  gap-2 items-center">
-                                        <span className="text-xl lg:text-2xl min-w-[80px] lg:min-w-[100px]"><span className="text-green-900/50">아버지</span> 하종학</span>
-                                        <div className="flex flex-row gap-2 lg:gap-4">
-                                            <a href="tel:+8201053586212" className="border border-green-900 rounded-full text-green-900 p-2 hover:bg-green-900/10 transition-colors">
+                                        <span className="text-xl lg:text-2xl min-w-[80px] lg:min-w-[100px]"><span className="opacity-50">아버지</span> 하종학</span>
+                                        <div className="flex flex-row gap-2 lg:gap-2">
+                                            <a href="tel:+8201053586212" className="border border-white rounded-full p-2 hover:bg-white/10 transition-colors">
                                                 <Phone size={14} />
                                             </a>
-                                            <a className="border border-green-900 rounded-full text-green-900 p-2 hover:bg-green-900/10 transition-colors">
+                                            <a className="border border-white rounded-full p-2 hover:bg-white/10 transition-colors">
                                                 <MessageCircle size={14} />
                                             </a>
                                         </div>
                                     </li>
                                     <li className="flex flex-row gap-2 items-center">
-                                        <span className="text-xl lg:text-2xl min-w-[80px] lg:min-w-[100px]"><span className="text-green-900/50">어머니</span> 권순옥</span>
-                                        <div className="flex flex-row gap-2 lg:gap-4">
-                                            <a href="tel:+8201063546212" className="border border-green-900 rounded-full text-green-900 p-2 hover:bg-green-900/10 transition-colors">
+                                        <span className="text-xl lg:text-2xl min-w-[80px] lg:min-w-[100px]"><span className="text-white/50">어머니</span> 권순옥</span>
+                                        <div className="flex flex-row gap-2 lg:gap-2">
+                                            <a href="tel:+8201063546212" className="border border-white rounded-full p-2 hover:bg-white/10 transition-colors">
                                                 <Phone size={14} />
                                             </a>
-                                            <a className="border border-green-900 rounded-full text-green-900 p-2 hover:bg-green-900/10 transition-colors">
+                                            <a className="border border-white rounded-full p-2 hover:bg-white/10 transition-colors">
                                                 <MessageCircle size={14} />
                                             </a>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
+                            <Flower className="absolute -right-2 -top-2 lg:-right-4 lg:-top-3 flex rotate-180 z-10 w-[60px] lg:w-[120px] pointer-events-none" />
+                            <Flower className="absolute -left-2 -bottom-1 lg:-left-4 lg:-bottom-3 flex z-10 w-[60px] lg:w-[120px] pointer-events-none" />
+                        </div>
+                    </section>
+
+                    {/* Family Bank */}
+                    <section id="family_bank" className="px-4 w-full container mx-auto max-w-[680px] mt-8">
+                        <div className="bg-white/60 border-2 border-green-900 text-green-900 rounded-lg shadow-lg py-8 px-2 flex flex-col items-center gap-2 justify-between relative overflow-hidden">
+                            <span className="text-lg lg:text-2xl text-center">
+                                신랑신부에게 따뜻한 축하의 말을 전해주세요.<br /> 아래 계좌로 선물을 보내주시며 축복을 나눠주세요.
+                            </span>
+                            <ul className="flex flex-col gap-0 mt-2 text-lg lg:text-xl">
+                                <li className="flex flex-row gap-2 items-center">
+                                    <span>하종학:</span>
+                                    <span>농협은행 : 084-02-179986</span>
+                                </li>
+                                <li className="flex flex-row gap-2 items-center">
+                                    <span>권순옥:</span>
+                                    <span>국민은행 : 762-24-0049730</span>
+                                </li>
+                            </ul>
+                            <Flower className="absolute -right-2 -top-2 lg:-right-4 lg:-top-3 flex rotate-180 z-10 w-[60px] lg:w-[120px] pointer-events-none" />
+                            <Flower className="absolute -left-2 -bottom-1 lg:-left-4 lg:-bottom-3 flex z-10 w-[60px] lg:w-[120px] pointer-events-none" />
                         </div>
                     </section>
                 </>
