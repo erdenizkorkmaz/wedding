@@ -69,11 +69,11 @@ export default function EventContainer(props: EventContainerProps) {
                 className="hidden lg:flex absolute -left-5 rotate-12 z-10 h-full w-auto pointer-events-none"
                 style={{ objectFit: 'contain' }}
             />
-            <div className="bg-white/60 rounded-lg shadow-lg lg:ml-20 lg:pl-28 p-6 lg:p-8 flex flex-col lg:flex-row gap-4 justify-between">
+            <div className="bg-white/60 rounded-lg shadow-lg lg:ml-20 lg:pl-28 p-4 lg:p-8 flex flex-col lg:flex-row gap-4 justify-between">
                 <div className="flex flex-col w-full lg:w-1/2 text-green-800">
 
                     <div className="flex flex-row gap-4 justify-between lg:justify-start">
-                        <h2 className="text-2xl font-bold lg:mb-2">
+                        <h2 className="text-xl lg:text-2xl font-bold lg:mb-2">
                             {props.title} - {props.date}
                         </h2>
 
@@ -88,7 +88,7 @@ export default function EventContainer(props: EventContainerProps) {
 
                     <p className="text-green-800 text-xl leading-none lg:text-2xl">{props.location}</p>
                     <b className="mt-3 lg:mt-3 text-xl lg:text-2xl">{props.descriptionTitle}</b>
-                    <div className="flex flex-col gap-1 text-xl lg:text-2xl">
+                    <div className="flex flex-col gap-1 text-xl lg:text-2xl mt-1">
                         <p className="text-green-800 leading-none">{props.description1}</p>
                         <p className="text-green-800 leading-none">{props.description2}</p>
                         <p className="text-green-800 leading-none">{props.description3}</p>
