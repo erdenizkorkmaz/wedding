@@ -447,7 +447,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                                             <a href="tel:+8201053586212" className="flex items-center justify-center border border-white rounded-full p-2 lg:p-3 hover:bg-white/10 transition-colors">
                                                 <Phone size={14} />
                                             </a>
-                                            <a href={`https://open.kakao.com/o/${encodeURIComponent('hdbag')}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center border border-white rounded-full p-2 lg:p-3 hover:bg-white/10 transition-colors">
+                                            <a href="https://open.kakao.com/o/sJ1xeUNc" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center border border-white rounded-full p-2 lg:p-3 hover:bg-white/10 transition-colors">
                                                 <MessageCircle size={14} className="relative -top-[1px] left-[1px]" />
                                             </a>
                                         </div>
