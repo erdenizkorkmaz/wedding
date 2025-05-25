@@ -294,74 +294,71 @@ export default function HomeClient({ locale }: HomeClientProps) {
         }
     }
 
+    const createCelebration = (
+        cityKey: 'UK' | 'TR' | 'KO',
+        eventName: string,
+        mapUrl: string
+    ) => ({
+        event: eventName,
+        title: t(`celebrations.${cityKey}.title`),
+        date: t(`celebrations.${cityKey}.date`),
+        location: t(`celebrations.${cityKey}.location`),
+        descriptionTitle: t(`celebrations.${cityKey}.descriptionTitle`),
+        description1: t(`celebrations.${cityKey}.description1`),
+        description2: t(`celebrations.${cityKey}.description2`),
+        description3: t(`celebrations.${cityKey}.description3`),
+        description4: t(`celebrations.${cityKey}.description4`),
+        map: mapUrl,
+    });
+
     const celebrations = [
-        {
-            event: "London",
-            title: t('celebrations.UK.title'),
-            date: t('celebrations.UK.date'),
-            location: t('celebrations.UK.location'),
-            descriptionTitle: t('celebrations.UK.descriptionTitle'),
-            description1: t('celebrations.UK.description1'),
-            description2: t('celebrations.UK.description2'),
-            description3: t('celebrations.UK.description3'),
-            description4: t('celebrations.UK.description4'),
-            map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2484.409655370034!2d-0.1710957221952322!3d51.48734957180888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876056c2150cfa7%3A0xe0b00e43b3c6998!2sChelsea%20Old%20Town%20Hall!5e0!3m2!1sen!2suk!4v1742837365998!5m2!1sen!2suk"
-        },
-        {
-            event: "Istanbul",
-            title: t('celebrations.TR.title'),
-            date: t('celebrations.TR.date'),
-            location: t('celebrations.TR.location'),
-            descriptionTitle: t('celebrations.TR.descriptionTitle'),
-            description1: t('celebrations.TR.description1'),
-            description2: t('celebrations.TR.description2'),
-            description3: t('celebrations.TR.description3'),
-            map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.2362249398066!2d28.99280807658783!3d41.04196297134587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab72d8bdbf649%3A0x5e09db9b67067c74!2sSVADBA%20MACKA!5e0!3m2!1sen!2suk!4v1742837318666!5m2!1sen!2suk"
-        },
-        {
-            event: "Seoul",
-            title: t('celebrations.KO.title'),
-            date: t('celebrations.KO.date'),
-            location: t('celebrations.KO.location'),
-            descriptionTitle: t('celebrations.KO.descriptionTitle'),
-            description1: t('celebrations.KO.description1'),
-            description2: t('celebrations.KO.description2'),
-            description3: t('celebrations.KO.description3'),
-            description4: t('celebrations.KO.description4'),
-            map: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.7818094134354!2d126.9947198!3d37.56020409999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca29433662bd7%3A0x540c2f813a78c49e!2sKorea%20House!5e0!3m2!1sen!2suk!4v1742837248405!5m2!1sen!2suk"
-        }
-    ]
+        createCelebration(
+            'UK',
+            'London',
+            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2484.409655370034!2d-0.1710957221952322!3d51.48734957180888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876056c2150cfa7%3A0xe0b00e43b3c6998!2sChelsea%20Old%20Town%20Hall!5e0!3m2!1sen!2suk!4v1742837365998!5m2!1sen!2suk"
+        ),
+        createCelebration(
+            'TR',
+            'Istanbul',
+            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.2362249398066!2d28.99280807658783!3d41.04196297134587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab72d8bdbf649%3A0x5e09db9b67067c74!2sSVADBA%20MACKA!5e0!3m2!1sen!2suk!4v1742837318666!5m2!1sen!2suk"
+        ),
+        createCelebration(
+            'KO',
+            'Seoul',
+            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.7818094134354!2d126.9947198!3d37.56020409999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca29433662bd7%3A0x540c2f813a78c49e!2sKorea%20House!5e0!3m2!1sen!2suk!4v1742837248405!5m2!1sen!2suk"
+        ),
+    ];
 
     // Use a completely unique component key for each locale to force complete remount
     return (
         <div className="flex flex-col text-green-800 min-h-screen bg-gradient-to-b from-background to-foreground/5 overflow-x-hidden" key={`home-root-${locale}`}>
             {/* Navigation */}
-            <nav className="px-4 py-4 fixed top-2 z-10 flex flex-row justify-center w-full">
-                <Image src="/small-flowers.png" alt="Flower decoration" width={40} height={40} className="mr-2 rotate-180" />
+            <nav className="px-2 sm:px-4 py-3 sm:py-4 fixed top-2 z-10 flex flex-row justify-center items-center w-full space-x-2 sm:space-x-4">
+                <Image src="/small-flowers.png" alt="Flower decoration" width={30} height={30} className="rotate-180" />
                 <LanguageSwitcher />
-                <Image src="/small-flowers.png" alt="Flower decoration" width={40} height={40} className="ml-2" />
+                <Image src="/small-flowers.png" alt="Flower decoration" width={30} height={30} />
             </nav>
 
             {/* Hero Section */}
             <motion.section
-                className="pt-24 lg:pt-32 pb-20 px-4 text-center"
+                className="pt-24 md:pt-28 lg:pt-32 pb-12 md:pb-16 lg:pb-20 px-2 sm:px-4 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 key={`hero-${locale}`}
             >
-                <div className="container mx-auto flex flex-col gap-8">
+                <div className="container mx-auto flex flex-col gap-6 md:gap-8">
                     <Image
                         src="/hero.png"
                         alt="Wedding hero image"
                         width={1200}
                         height={600}
-                        className="w-full lg:w-4/6 max-w-screen-lg mx-auto"
+                        className="w-full md:w-5/6 lg:w-4/6 max-w-screen-lg mx-auto"
                         priority
                     />
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 md:gap-3">
                         <motion.h1
-                            className="text-4xl lg:text-7xl font-bold whitespace-nowrap"
+                            className="text-3xl md:text-5xl lg:text-7xl font-bold whitespace-normal"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3 }}
@@ -369,13 +366,13 @@ export default function HomeClient({ locale }: HomeClientProps) {
                             {t('title')}
                         </motion.h1>
                         <motion.div
-                            className="text-xl lg:text-5xl leading-none"
+                            className="text-lg md:text-2xl lg:text-5xl leading-tight md:leading-snug"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.5 }}
                             dangerouslySetInnerHTML={{ __html: t('description') }}
                         />
-                        <div className="flex flex-wrap justify-center gap-2 lg:gap-4 w-auto mx-auto text-xl lg:text-4xl items-center">
+                        <div className="flex flex-wrap justify-center gap-2 md:gap-3 lg:gap-4 w-auto mx-auto text-lg md:text-2xl lg:text-4xl items-center">
                             <motion.span
                                 className="cursor-pointer transition-colors"
                                 onClick={() => scrollTo('london')}
@@ -384,7 +381,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                                 transition={{ delay: 0.6 }}>
                                 {nav('london')}
                             </motion.span>
-                            <span className="w-1 h-1 lg:w-2 lg:h-2 rounded-full bg-green-800"></span>
+                            <span className="w-1 h-1 md:w-1.5 md:h-1.5 lg:w-2 lg:h-2 rounded-full bg-green-800"></span>
                             <motion.span
                                 className="cursor-pointer transition-colors"
                                 onClick={() => scrollTo('istanbul')}
@@ -393,7 +390,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
                                 transition={{ delay: 0.7 }}>
                                 {nav('istanbul')}
                             </motion.span>
-                            <span className="w-1 h-1 lg:w-2 lg:h-2 rounded-full bg-green-800"></span>
+                            <span className="w-1 h-1 md:w-1.5 md:h-1.5 lg:w-2 lg:h-2 rounded-full bg-green-800"></span>
                             <motion.span
                                 className="cursor-pointer transition-colors"
                                 onClick={() => scrollTo('seoul')}
@@ -404,25 +401,25 @@ export default function HomeClient({ locale }: HomeClientProps) {
                             </motion.span>
                         </div>
                         <motion.button
-                            className="mt-4 mx-auto px-12 py-3 cursor-pointer text-xl lg:text-2xl bg-green-950 text-green-200 rounded-md hover:bg-green-900 transition-colors"
+                            className="mt-4 mx-auto px-6 md:px-10 lg:px-12 py-2 md:py-3 cursor-pointer text-lg md:text-xl lg:text-2xl bg-green-950 text-green-200 rounded-md hover:bg-green-900 transition-colors"
                             onClick={throwConfetti}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.9 }}
                         >
-                            {t('celebrate')} <Image src="/flower-medium.png" alt="Flower decoration" width={40} height={40} className="w-10 ml-2 inline-block" />
+                            {t('celebrate')} <Image src="/flower-medium.png" alt="Flower decoration" width={40} height={40} className="w-8 md:w-10 ml-2 inline-block" />
                         </motion.button>
                     </div>
                 </div>
             </motion.section>
 
             {/* Info Cards */}
-            <section id="celebrations" className="py-8 lg:py-16 px-4 w-full flex flex-row justify-center relative container mx-auto overflow-hidden">
-                <div className="flex flex-col gap-6 lg:gap-12 w-full">
+            <section id="celebrations" className="py-8 md:py-12 lg:py-16 px-2 sm:px-4 w-full flex flex-col items-center relative container mx-auto overflow-hidden">
+                <div className="flex flex-col gap-6 md:gap-8 lg:gap-12 w-full">
                     {celebrations.map((celebration, index) => (
-                        <div key={index} className="flex flex-col items-center gap-6 lg:gap-12 w-full max-w-[1000px] mx-auto">
+                        <div key={index} className="flex flex-col items-center gap-6 md:gap-8 lg:gap-12 w-full max-w-[1000px] mx-auto">
                             <EventContainer key={index} {...celebration} />
-                            {index !== celebrations.length - 1 && <Image src="/flower-medium.png" alt="Flower decoration" width={120} height={120} className="flex lg:hidden rotate-12 z-10 w-[120px] pointer-events-none" />}
+                            {index !== celebrations.length - 1 && <Image src="/flower-medium.png" alt="Flower decoration" width={120} height={120} className="flex lg:hidden rotate-12 z-10 w-[80px] md:w-[100px] lg:w-[120px] pointer-events-none" />}
                         </div>
                     ))}
                 </div>
@@ -468,12 +465,12 @@ export default function HomeClient({ locale }: HomeClientProps) {
                     </section>
 
 
-                    <span className="text-xl lg:text-2xl text-center mt-8 leading-tight">결혼식에 참석하실 분은 
-                                    참석여부를 알려주시면  <br/>
-                                    예식장 지정좌석 배정관계로  <br/>
-                                    참석의사를 전달해주시면 
-                                    감사하겠습니다
-                            </span>
+                    <span className="text-xl lg:text-2xl text-center mt-8 leading-tight">결혼식에 참석하실 분은
+                        참석여부를 알려주시면  <br />
+                        예식장 지정좌석 배정관계로  <br />
+                        참석의사를 전달해주시면
+                        감사하겠습니다
+                    </span>
 
                     {/* Family Bank */}
                     <section id="family_bank" className="font-nanum px-4 w-full container mx-auto max-w-[680px] mt-8">
@@ -558,4 +555,4 @@ export default function HomeClient({ locale }: HomeClientProps) {
             </footer>
         </div>
     );
-} 
+}

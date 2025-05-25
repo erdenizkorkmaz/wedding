@@ -9,7 +9,7 @@ export default createMiddleware({
   defaultLocale,
   
   // Detect the preferred locale from the browser
-  localeDetection: true,
+  localeDetection: false,
   
   // Always include the locale prefix in URLs
   localePrefix: 'always'

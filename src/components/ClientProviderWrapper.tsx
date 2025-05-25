@@ -16,8 +16,6 @@ export default function ClientProviderWrapper({
 }: ClientProviderWrapperProps) {
     // Debug logging to verify messages and locale
     useEffect(() => {
-        console.log("ClientProviderWrapper - Locale:", locale);
-        console.log("ClientProviderWrapper - Messages keys:", Object.keys(messages));
         if (messages.home) {
             console.log("Home messages:", messages.home);
         }

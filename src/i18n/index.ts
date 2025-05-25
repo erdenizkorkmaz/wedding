@@ -1,7 +1,7 @@
 import { getRequestConfig } from 'next-intl/server';
 
 export const locales = ['en', 'ko', 'tr'];
-export const defaultLocale = 'en';
+export const defaultLocale = 'ko';
 
 // This is the configuration needed for next-intl middleware
 export default getRequestConfig(async ({ locale }) => {
