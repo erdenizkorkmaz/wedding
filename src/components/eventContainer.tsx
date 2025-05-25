@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { CalendarPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -14,6 +15,8 @@ interface EventContainerProps {
     description3: string;
     description4?: string;
     map: string;
+    passed: string;
+    isPassed: boolean;
 }
 
 export default function EventContainer(props: EventContainerProps) {
@@ -55,7 +58,8 @@ export default function EventContainer(props: EventContainerProps) {
     return (
         <motion.div
             id={props.title.toLowerCase()}
-            className="relative flex flex-col w-full"
+            className={cn("relative flex flex-col w-full",
+                props.isPassed && "lg:px-20")}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -66,55 +70,71 @@ export default function EventContainer(props: EventContainerProps) {
                 alt="Decorative flower"
                 width={200}
                 height={800}
-                className="hidden lg:flex absolute -left-5 rotate-12 z-10 h-full w-auto pointer-events-none"
+                className={cn("hidden lg:flex absolute -left-5 rotate-12 z-10 h-full w-auto pointer-events-none",
+                    props.isPassed && "min-h-[140px] left-10")}
                 style={{ objectFit: 'contain' }}
             />
-            <div className="bg-white/60 rounded-lg shadow-lg lg:ml-20 lg:pl-28 p-4 lg:p-8 flex flex-col lg:flex-row gap-4 justify-between">
+            <div className={cn("bg-white/60 rounded-lg shadow-lg lg:ml-20 lg:pl-32 p-4 lg:p-8 flex flex-col lg:flex-row gap-4 justify-between",
+                props.isPassed && "lg:pl-20 lg:ml-4",
+                !props.isPassed && "lg:pl-24")}>
                 <div className="flex flex-col w-full lg:w-1/2 text-green-800">
 
                     <div className="flex flex-row gap-4 justify-between lg:justify-start">
                         <h2 className="text-xl lg:text-2xl font-bold lg:mb-2">
                             {props.title} - {props.date}
                         </h2>
-
-                        <button
-                            onClick={addToCalendar}
-                            title={googleCalendar("add")}
-                            className="flex border-green-800 border rounded-full p-2 items-center cursor-pointer gap-2 w-fit text-md lg:text-lg text-green-800 hover:bg-green-800/20  transition-colors mb-2"
-                        >
-                            <CalendarPlus className="w-4 h-4" />
-                        </button>
+                        {props.isPassed ? (
+                            <span className="text-green-800 text-xl leading-none lg:text-2xl">
+                                {props.passed}
+                            </span>
+                        ) : (
+                            <button
+                                onClick={addToCalendar}
+                                title={googleCalendar("add")}
+                                className="flex border-green-800 border rounded-full p-2 items-center cursor-pointer gap-2 w-fit text-md lg:text-lg text-green-800 hover:bg-green-800/20  transition-colors mb-2"
+                            >
+                                <CalendarPlus className="w-4 h-4" />
+                            </button>
+                        )}
                     </div>
 
                     <p className="text-green-800 text-xl leading-none lg:text-2xl">{props.location}</p>
-                    <b className="mt-3 lg:mt-3 text-xl lg:text-2xl">{props.descriptionTitle}</b>
-                    <div className="flex flex-col gap-1 text-xl lg:text-2xl mt-1">
-                        <p className="text-green-800 leading-none">{props.description1}</p>
-                        <p className="text-green-800 leading-none">{props.description2}</p>
-                        <p className="text-green-800 leading-none">{props.description3}</p>
-                        <p className="text-green-800 leading-none">{props.description4}</p>
+
+                    {!props.isPassed && (
+                        <>
+                            <b className="mt-3 lg:mt-3 text-xl lg:text-2xl">{props.descriptionTitle}</b>
+                            <div className="flex flex-col gap-1 text-xl lg:text-2xl mt-1">
+                                <p className="text-green-800 leading-none">{props.description1}</p>
+                                <p className="text-green-800 leading-none">{props.description2}</p>
+                                <p className="text-green-800 leading-none">{props.description3}</p>
+                                <p className="text-green-800 leading-none">{props.description4}</p>
+                            </div>
+                        </>
+                    )}
+                </div>
+                {!props.isPassed && (
+                    <div className="google-maps-container w-full lg:w-1/2 h-[300px] lg:h-auto">
+                        <iframe
+                            src={props.map}
+                            title={`${props.title} - ${props.location} Map`}
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0 }}
+                            allowFullScreen
+                            referrerPolicy="no-referrer-when-downgrade"
+                            sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+                            className="max-w-full rounded-lg"
+                        />
                     </div>
-                </div>
-                <div className="google-maps-container w-full lg:w-1/2 h-[300px] lg:h-auto">
-                    <iframe
-                        src={props.map}
-                        title={`${props.title} - ${props.location} Map`}
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0 }}
-                        allowFullScreen
-                        referrerPolicy="no-referrer-when-downgrade"
-                        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-                        className="max-w-full rounded-lg"
-                    />
-                </div>
+                )}
             </div>
             <Image
                 src="/small-flowers.png"
                 alt="Decorative flowers"
                 width={100}
                 height={100}
-                className="h-1/5 lg:h-1/3 hidden lg:flex absolute -bottom-8 -right-8 rotate-12 pointer-events-none"
+                className={cn("h-1/5 lg:h-1/3 hidden lg:flex absolute -bottom-8 -right-4 rotate-12 pointer-events-none",
+                    props.isPassed && "min-h-[98px] right-10")}
             />
         </motion.div>
     );

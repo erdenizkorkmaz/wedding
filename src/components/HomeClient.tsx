@@ -297,6 +297,7 @@ export default function HomeClient({ locale }: HomeClientProps) {
     const createCelebration = (
         cityKey: 'UK' | 'TR' | 'KO',
         eventName: string,
+        isPassed: boolean = false,
         mapUrl: string
     ) => ({
         event: eventName,
@@ -309,23 +310,28 @@ export default function HomeClient({ locale }: HomeClientProps) {
         description3: t(`celebrations.${cityKey}.description3`),
         description4: t(`celebrations.${cityKey}.description4`),
         map: mapUrl,
+        passed: t('passed'),
+        isPassed: isPassed,
     });
 
     const celebrations = [
         createCelebration(
-            'UK',
-            'London',
-            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2484.409655370034!2d-0.1710957221952322!3d51.48734957180888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876056c2150cfa7%3A0xe0b00e43b3c6998!2sChelsea%20Old%20Town%20Hall!5e0!3m2!1sen!2suk!4v1742837365998!5m2!1sen!2suk"
+            'KO',
+            'Seoul',
+            false,
+            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.7818094134354!2d126.9947198!3d37.56020409999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca29433662bd7%3A0x540c2f813a78c49e!2sKorea%20House!5e0!3m2!1sen!2suk!4v1742837248405!5m2!1sen!2suk"
         ),
         createCelebration(
             'TR',
             'Istanbul',
+            true,
             "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.2362249398066!2d28.99280807658783!3d41.04196297134587!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab72d8bdbf649%3A0x5e09db9b67067c74!2sSVADBA%20MACKA!5e0!3m2!1sen!2suk!4v1742837318666!5m2!1sen!2suk"
         ),
         createCelebration(
-            'KO',
-            'Seoul',
-            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.7818094134354!2d126.9947198!3d37.56020409999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca29433662bd7%3A0x540c2f813a78c49e!2sKorea%20House!5e0!3m2!1sen!2suk!4v1742837248405!5m2!1sen!2suk"
+            'UK',
+            'London',
+            true,
+            "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2484.409655370034!2d-0.1710957221952322!3d51.48734957180888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876056c2150cfa7%3A0xe0b00e43b3c6998!2sChelsea%20Old%20Town%20Hall!5e0!3m2!1sen!2suk!4v1742837365998!5m2!1sen!2suk"
         ),
     ];
 
@@ -427,8 +433,6 @@ export default function HomeClient({ locale }: HomeClientProps) {
 
             {locale === 'ko' && (
                 <>
-
-
                     {/* Contact Host */}
                     <section id="contact_host" className="px-4 w-full container mx-auto max-w-[680px] mt-8">
                         <div className="bg-green-900 border-2 border-green-950 rounded-lg shadow-lg py-4 px-2 flex flex-col items-center gap-4 justify-between text-white relative overflow-hidden">

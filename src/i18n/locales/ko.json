@@ -8,6 +8,7 @@
         "rsvp": "참석 여부",
         "scrollDown": "아래로 스크롤하여 탐색하세요",
         "celebrate": "축하하기!",
+        "passed": "지나간 일정",
         "celebrations": {
             "UK": {
                 "title": "런던",
@@ -26,7 +27,8 @@
                 "descriptionTitle": "일정",
                 "description1": "19:00 - 식",
                 "description2": "20:00 - 식사 시간!",
-                "description3": "21:00 - 댄스 타임!"
+                "description3": "21:00 - 댄스 타임!",
+                "description4": "22:00 - 파티 시작!"
             },
             "KO": {
                 "title": "서울",

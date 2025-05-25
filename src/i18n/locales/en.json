@@ -4,6 +4,7 @@
         "description": "invite you to celebrate their marriage",
         "scrollDown": "Scroll to explore",
         "celebrate": "Celebrate!",
+        "passed": "Passed",
         "celebrations": {
             "UK": {
                 "title": "London",
@@ -23,7 +24,7 @@
                 "description1": "19:00 - Ceremony",
                 "description2": "20:00 - We Eat!",
                 "description3": "21:00 - We Dance!",
-                "description4": ""
+                "description4": "22:00 - Party Time!"
             },
             "KO": {
                 "title": "Seoul",

@@ -8,6 +8,7 @@
         "rsvp": "Katilim Onayi",
         "scrollDown": "Keşfetmek için aşağı kaydırın",
         "celebrate": "Kutla!",
+        "passed": "Bitti",
         "celebrations": {
             "UK": {
                 "title": "Londra",
@@ -27,7 +28,7 @@
                 "description1": "19:00 - Tören",
                 "description2": "20:00 - Yemek Vakti!",
                 "description3": "21:00 - Dans Zamani!",
-                "description4": ""
+                "description4": "22:00 - Parti Zamanı!"
             },
             "KO": {
                 "title": "Seul",
